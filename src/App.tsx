@@ -83,20 +83,18 @@ export const App: React.FC = () => {
 
   return (
     <div className="min-h-screen bg-[#F7F5F0] text-[#1D221E] font-sans selection:bg-[#3D7B52] selection:text-white flex flex-col antialiased">
-      {/* 
-        MASTER CONTAINER
-        Near full-width layout with elegant breathing room at top and slim side gutters
-        matching high-end botanical reference layout
-      */}
-      <div className="w-full max-w-[97vw] 2xl:max-w-[1860px] mx-auto px-2 sm:px-3 md:px-4 lg:px-5 pt-5 sm:pt-7 lg:pt-8 pb-8 sm:pb-12 flex flex-col gap-10 sm:gap-14 lg:gap-16">
-        {/* Full Hero Section with HD Yoga image & Integrated Header */}
+      {/* Hero: Edge-to-edge on mobile, framed luxury card on tablet & desktop */}
+      <div className="w-full sm:max-w-[97vw] 2xl:max-w-[1860px] mx-auto sm:px-3 md:px-4 lg:px-5 sm:pt-6 lg:pt-8">
         <Hero
           cartCount={totalCartCount}
           onOpenCart={() => setIsCartOpen(true)}
           wishlistCount={wishlistIds.length}
         />
+      </div>
 
-        {/* Section 2: Rooted in tradition & Section 3: Products in same container */}
+      {/* Main Body Content: Preserves clean breathing room and gutters */}
+      <main className="w-full max-w-[97vw] 2xl:max-w-[1860px] mx-auto px-3 sm:px-4 lg:px-5 py-8 sm:py-12 lg:py-14 flex flex-col gap-10 sm:gap-14 lg:gap-16">
+        {/* Section 2: Rooted in tradition & Section 3: Products */}
         <TraditionAndProducts
           onAddToCart={handleAddToCart}
           onToggleWishlist={handleToggleWishlist}
@@ -111,8 +109,10 @@ export const App: React.FC = () => {
 
         {/* Section 6: Feel the difference in 30 days */}
         <GuaranteeBanner />
+      </main>
 
-        {/* Section 7: Footer */}
+      {/* Footer: Edge-to-edge on mobile, framed luxury card on tablet & desktop */}
+      <div className="w-full sm:max-w-[97vw] 2xl:max-w-[1860px] mx-auto sm:px-3 md:px-4 lg:px-5 sm:pb-8 lg:pb-12">
         <Footer />
       </div>
 

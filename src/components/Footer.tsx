@@ -4,7 +4,7 @@ import { Instagram, Linkedin, Music, Youtube } from 'lucide-react';
 export const Footer: React.FC = () => {
   return (
     <footer className="w-full overflow-hidden">
-      <div className="bg-[#141A15] text-white rounded-[2rem] sm:rounded-[2.5rem] lg:rounded-[3rem] p-6 sm:p-10 lg:p-14 shadow-xl w-full">
+      <div className="bg-[#141A15] text-white rounded-t-[2.5rem] rounded-b-none sm:rounded-[2.5rem] lg:rounded-[3rem] p-6 sm:p-10 lg:p-14 shadow-xl w-full">
         {/* Top 4 Columns */}
         <div className="grid grid-cols-2 md:grid-cols-12 gap-8 lg:gap-12 pb-14 border-b border-white/10">
           {/* Col 1: Explore */}
