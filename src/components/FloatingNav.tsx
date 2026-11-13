@@ -42,75 +42,75 @@ export const FloatingNav: React.FC<FloatingNavProps> = ({
         <>
           {/* ========================================================= */}
           {/* DESKTOP VIEW: Right-hand side, bottom, vertically aligned */}
-          {/* Dark Container with Crisp Light Buttons Inside            */}
+          {/* Light Frosted Glassmorphism Container with Dark Icons    */}
           {/* ========================================================= */}
           <motion.div
             initial={{ opacity: 0, x: 25, scale: 0.9 }}
             animate={{ opacity: 1, x: 0, scale: 1 }}
             exit={{ opacity: 0, x: 25, scale: 0.9 }}
             transition={{ type: 'spring', damping: 20, stiffness: 300 }}
-            className="hidden md:flex fixed bottom-8 right-6 lg:right-8 z-40 flex-col items-center gap-2.5 select-none"
+            className="hidden md:flex fixed bottom-8 right-6 lg:right-8 z-40 flex-col items-center gap-2 select-none"
           >
-            {/* Dark Charcoal-Forest Capsule Container */}
-            <div className="bg-[#1C221D]/92 backdrop-blur-xl border border-white/15 p-2 rounded-full shadow-[0_16px_40px_rgba(0,0,0,0.45)] flex flex-col items-center gap-2.5">
-              {/* Light Search Button */}
+            {/* Pure Glassmorphic Light Frosted Pill Container (Clean, No Heavy Shadow) */}
+            <div className="bg-white/70 backdrop-blur-2xl border border-white/80 p-2 rounded-full flex flex-col items-center gap-2 shadow-xs">
+              {/* Dark Search Icon Button */}
               <button
                 onClick={onOpenSearch}
-                className="w-10 h-10 rounded-full bg-[#FAF8F5] hover:bg-white text-[#1C221D] hover:text-[#3D7B52] flex items-center justify-center transition-all duration-200 hover:scale-105 active:scale-95 cursor-pointer relative group border border-white/20 shadow-xs"
+                className="w-10 h-10 rounded-full hover:bg-black/5 active:bg-black/10 text-[#1E2420] flex items-center justify-center transition-all duration-200 hover:scale-105 active:scale-95 cursor-pointer relative group"
                 aria-label="Search remedies"
               >
-                <Search className="w-4 h-4 text-stone-700 group-hover:text-[#3D7B52] transition-colors" />
+                <Search className="w-4 h-4 text-[#1E2420] group-hover:text-[#3D7B52] transition-colors" />
                 {/* Desktop Tooltip */}
-                <span className="absolute right-12 bg-[#141A15] text-white text-[11px] font-medium px-2.5 py-1 rounded-md shadow-lg opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none whitespace-nowrap border border-white/10">
-                  Search remedies
+                <span className="absolute right-12 bg-[#1E2420] text-white text-[11px] font-medium px-2.5 py-1 rounded-md opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none whitespace-nowrap shadow-sm">
+                  Search
                 </span>
               </button>
 
-              {/* Light Wishlist Button */}
+              {/* Dark Wishlist Icon Button */}
               <a
                 href="#shop"
-                className="w-10 h-10 rounded-full bg-[#FAF8F5] hover:bg-white text-[#1C221D] hover:text-[#3D7B52] flex items-center justify-center transition-all duration-200 hover:scale-105 active:scale-95 cursor-pointer relative group border border-white/20 shadow-xs"
+                className="w-10 h-10 rounded-full hover:bg-black/5 active:bg-black/10 text-[#1E2420] flex items-center justify-center transition-all duration-200 hover:scale-105 active:scale-95 cursor-pointer relative group"
                 aria-label="Wishlist"
               >
-                <Heart className="w-4 h-4 text-stone-700 group-hover:text-[#3D7B52] transition-colors" />
+                <Heart className="w-4 h-4 text-[#1E2420] group-hover:text-[#3D7B52] transition-colors" />
                 {wishlistCount > 0 && (
                   <span className="absolute -top-1 -right-1 w-4 h-4 rounded-full bg-[#3D7B52] text-white text-[10px] font-extrabold flex items-center justify-center shadow-xs">
                     {wishlistCount}
                   </span>
                 )}
-                <span className="absolute right-12 bg-[#141A15] text-white text-[11px] font-medium px-2.5 py-1 rounded-md shadow-lg opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none whitespace-nowrap border border-white/10">
+                <span className="absolute right-12 bg-[#1E2420] text-white text-[11px] font-medium px-2.5 py-1 rounded-md opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none whitespace-nowrap shadow-sm">
                   Wishlist ({wishlistCount})
                 </span>
               </a>
 
-              {/* Light Cart Button */}
+              {/* Dark Cart Icon Button */}
               <button
                 onClick={onOpenCart}
-                className="w-10 h-10 rounded-full bg-[#FAF8F5] hover:bg-white text-[#1C221D] hover:text-[#3D7B52] flex items-center justify-center transition-all duration-200 hover:scale-105 active:scale-95 cursor-pointer relative group border border-white/20 shadow-xs"
+                className="w-10 h-10 rounded-full hover:bg-black/5 active:bg-black/10 text-[#1E2420] flex items-center justify-center transition-all duration-200 hover:scale-105 active:scale-95 cursor-pointer relative group"
                 aria-label="Shopping Cart"
               >
-                <ShoppingBag className="w-4 h-4 text-stone-700 group-hover:text-[#3D7B52] transition-colors" />
+                <ShoppingBag className="w-4 h-4 text-[#1E2420] group-hover:text-[#3D7B52] transition-colors" />
                 {cartCount > 0 && (
                   <span className="absolute -top-1 -right-1 w-4 h-4 rounded-full bg-[#3D7B52] text-white text-[10px] font-extrabold flex items-center justify-center shadow-xs">
                     {cartCount}
                   </span>
                 )}
-                <span className="absolute right-12 bg-[#141A15] text-white text-[11px] font-medium px-2.5 py-1 rounded-md shadow-lg opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none whitespace-nowrap border border-white/10">
+                <span className="absolute right-12 bg-[#1E2420] text-white text-[11px] font-medium px-2.5 py-1 rounded-md opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none whitespace-nowrap shadow-sm">
                   Cart ({cartCount})
                 </span>
               </button>
 
               {/* Subtle Divider */}
-              <div className="w-5 h-[1px] bg-white/20 my-0.5" />
+              <div className="w-5 h-[1px] bg-stone-300/60 my-0.5" />
 
               {/* Scroll To Top Button */}
               <button
                 onClick={scrollToTop}
-                className="w-8 h-8 rounded-full bg-white/10 hover:bg-white/20 text-stone-200 hover:text-white flex items-center justify-center transition-all active:scale-90 cursor-pointer group relative"
+                className="w-8 h-8 rounded-full hover:bg-black/5 active:bg-black/10 text-stone-600 hover:text-[#1E2420] flex items-center justify-center transition-all active:scale-90 cursor-pointer group relative"
                 aria-label="Scroll to top"
               >
                 <ArrowUp className="w-3.5 h-3.5" />
-                <span className="absolute right-12 bg-[#141A15] text-white text-[11px] font-medium px-2.5 py-1 rounded-md shadow-lg opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none whitespace-nowrap border border-white/10">
+                <span className="absolute right-12 bg-[#1E2420] text-white text-[11px] font-medium px-2.5 py-1 rounded-md opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none whitespace-nowrap shadow-sm">
                   Top
                 </span>
               </button>
@@ -119,7 +119,7 @@ export const FloatingNav: React.FC<FloatingNavProps> = ({
 
           {/* ========================================================= */}
           {/* MOBILE VIEW: Floating dock at the bottom center ("Thumb Zone") */}
-          {/* Dark Container with Light Buttons Inside                  */}
+          {/* Light Frosted Glassmorphism with Dark Icons (NO Heavy Shadow) */}
           {/* ========================================================= */}
           <motion.div
             initial={{ opacity: 0, y: 30, x: '-50%' }}
@@ -128,24 +128,24 @@ export const FloatingNav: React.FC<FloatingNavProps> = ({
             transition={{ type: 'spring', damping: 20, stiffness: 300 }}
             className="md:hidden fixed bottom-5 left-1/2 z-40 select-none"
           >
-            {/* Dark Charcoal-Forest Mobile Pill Dock */}
-            <div className="bg-[#1C221D]/95 backdrop-blur-xl border border-white/20 px-4 py-2.5 rounded-full shadow-[0_16px_40px_rgba(0,0,0,0.5)] flex items-center gap-4">
-              {/* Light Search */}
+            {/* Pure Glassmorphic Light Frosted Mobile Dock */}
+            <div className="bg-white/80 backdrop-blur-2xl border border-white/80 px-4 py-2 rounded-full flex items-center gap-4 shadow-xs">
+              {/* Search */}
               <button
                 onClick={onOpenSearch}
-                className="w-9 h-9 rounded-full bg-[#FAF8F5] active:bg-white text-[#1C221D] flex items-center justify-center transition-transform active:scale-90 border border-white/20 shadow-xs"
+                className="w-9 h-9 rounded-full hover:bg-black/5 active:bg-black/10 text-[#1E2420] flex items-center justify-center transition-transform active:scale-90"
                 aria-label="Search"
               >
-                <Search className="w-4 h-4 text-stone-700" />
+                <Search className="w-4 h-4 text-[#1E2420]" />
               </button>
 
-              {/* Light Wishlist */}
+              {/* Wishlist */}
               <a
                 href="#shop"
-                className="w-9 h-9 rounded-full bg-[#FAF8F5] active:bg-white text-[#1C221D] flex items-center justify-center transition-transform active:scale-90 relative border border-white/20 shadow-xs"
+                className="w-9 h-9 rounded-full hover:bg-black/5 active:bg-black/10 text-[#1E2420] flex items-center justify-center transition-transform active:scale-90 relative"
                 aria-label="Wishlist"
               >
-                <Heart className="w-4 h-4 text-stone-700" />
+                <Heart className="w-4 h-4 text-[#1E2420]" />
                 {wishlistCount > 0 && (
                   <span className="absolute -top-1 -right-1 w-4 h-4 rounded-full bg-[#3D7B52] text-white text-[10px] font-extrabold flex items-center justify-center shadow-xs">
                     {wishlistCount}
@@ -153,13 +153,13 @@ export const FloatingNav: React.FC<FloatingNavProps> = ({
                 )}
               </a>
 
-              {/* Light Cart */}
+              {/* Cart */}
               <button
                 onClick={onOpenCart}
-                className="w-9 h-9 rounded-full bg-[#FAF8F5] active:bg-white text-[#1C221D] flex items-center justify-center transition-transform active:scale-90 relative border border-white/20 shadow-xs"
+                className="w-9 h-9 rounded-full hover:bg-black/5 active:bg-black/10 text-[#1E2420] flex items-center justify-center transition-transform active:scale-90 relative"
                 aria-label="Shopping Cart"
               >
-                <ShoppingBag className="w-4 h-4 text-stone-700" />
+                <ShoppingBag className="w-4 h-4 text-[#1E2420]" />
                 {cartCount > 0 && (
                   <span className="absolute -top-1 -right-1 w-4 h-4 rounded-full bg-[#3D7B52] text-white text-[10px] font-extrabold flex items-center justify-center shadow-xs">
                     {cartCount}
@@ -170,7 +170,7 @@ export const FloatingNav: React.FC<FloatingNavProps> = ({
               {/* Quick Shop Button */}
               <a
                 href="#shop"
-                className="bg-[#488B5B] active:bg-[#3B734A] text-white text-xs font-bold px-4 py-2 rounded-full shadow-xs transition-transform active:scale-95"
+                className="bg-[#3D7B52] active:bg-[#306040] text-white text-xs font-bold px-4 py-2 rounded-full shadow-xs transition-transform active:scale-95"
               >
                 Shop
               </a>

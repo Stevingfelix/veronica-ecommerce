@@ -114,12 +114,19 @@ export const Hero: React.FC<HeroProps> = ({
               )}
             </button>
 
-            {/* Header Right Pill CTA */}
+            {/* Header Right Log In Pill */}
             <a
-              href="#shop"
-              className="hidden sm:inline-flex items-center justify-center bg-white hover:bg-gray-100 text-[#1C221D] text-xs font-bold uppercase tracking-wider px-5 py-2.5 rounded-full shadow-md transition-all ml-1.5"
+              href="#login"
+              className="hidden sm:inline-flex items-center gap-2 bg-white hover:bg-stone-100 text-[#1C221D] text-xs font-bold tracking-wide px-4.5 py-2.5 rounded-full shadow-sm transition-all ml-1.5 cursor-pointer"
             >
-              Shop the ritual
+              <svg
+                viewBox="0 0 24 24"
+                className="w-4 h-4 fill-none stroke-current stroke-2 stroke-linecap-round stroke-linejoin-round"
+              >
+                <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
+                <circle cx="12" cy="7" r="4" />
+              </svg>
+              <span>Log In</span>
             </a>
 
             {/* Mobile Menu Button */}
@@ -147,11 +154,18 @@ export const Hero: React.FC<HeroProps> = ({
               </a>
             ))}
             <a
-              href="#shop"
+              href="#login"
               onClick={() => setMobileMenuOpen(false)}
-              className="bg-[#3D7B52] text-white text-xs font-bold uppercase text-center py-3 rounded-full mt-2"
+              className="flex items-center justify-center gap-2 bg-[#3D7B52] hover:bg-[#326442] text-white text-xs font-bold tracking-wide text-center py-3 rounded-full mt-2"
             >
-              Shop the ritual
+              <svg
+                viewBox="0 0 24 24"
+                className="w-4 h-4 fill-none stroke-current stroke-2 stroke-linecap-round stroke-linejoin-round"
+              >
+                <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
+                <circle cx="12" cy="7" r="4" />
+              </svg>
+              <span>Log In</span>
             </a>
           </div>
         )}
