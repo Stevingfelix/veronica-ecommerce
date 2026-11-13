@@ -42,6 +42,7 @@ export const FloatingNav: React.FC<FloatingNavProps> = ({
         <>
           {/* ========================================================= */}
           {/* DESKTOP VIEW: Right-hand side, bottom, vertically aligned */}
+          {/* Lighter Luxury Theme */}
           {/* ========================================================= */}
           <motion.div
             initial={{ opacity: 0, x: 25, scale: 0.9 }}
@@ -50,34 +51,34 @@ export const FloatingNav: React.FC<FloatingNavProps> = ({
             transition={{ type: 'spring', damping: 20, stiffness: 300 }}
             className="hidden md:flex fixed bottom-8 right-6 lg:right-8 z-40 flex-col items-center gap-2.5 select-none"
           >
-            {/* Signature Forest Glass Vertical Pill */}
-            <div className="bg-[#242A24]/90 backdrop-blur-xl border border-white/15 p-2 rounded-full shadow-[0_14px_40px_rgba(0,0,0,0.45)] flex flex-col items-center gap-2.5">
+            {/* Warm Cream Frosted Glass Vertical Pill */}
+            <div className="bg-[#FAF8F5]/92 backdrop-blur-xl border border-stone-200/90 p-2 rounded-full shadow-[0_14px_35px_rgba(0,0,0,0.12)] flex flex-col items-center gap-2.5">
               {/* Search Button */}
               <button
                 onClick={onOpenSearch}
-                className="w-10 h-10 rounded-full bg-white/10 hover:bg-white/20 text-white flex items-center justify-center transition-all duration-200 hover:scale-105 active:scale-95 cursor-pointer relative group"
+                className="w-10 h-10 rounded-full bg-white hover:bg-stone-100 text-[#1E2420] hover:text-[#3D7B52] flex items-center justify-center transition-all duration-200 hover:scale-105 active:scale-95 cursor-pointer relative group border border-stone-200/60 shadow-2xs"
                 aria-label="Search remedies"
               >
-                <Search className="w-4 h-4 text-stone-200 group-hover:text-white" />
+                <Search className="w-4 h-4 text-stone-700 group-hover:text-[#3D7B52] transition-colors" />
                 {/* Desktop Tooltip */}
-                <span className="absolute right-12 bg-[#1A201B] text-white text-[11px] font-medium px-2.5 py-1 rounded-md shadow-md opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none whitespace-nowrap border border-white/10">
-                  Search
+                <span className="absolute right-12 bg-[#1E2520] text-white text-[11px] font-medium px-2.5 py-1 rounded-md shadow-lg opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none whitespace-nowrap border border-white/10">
+                  Search remedies
                 </span>
               </button>
 
               {/* Wishlist Button */}
               <a
                 href="#shop"
-                className="w-10 h-10 rounded-full bg-white/10 hover:bg-white/20 text-white flex items-center justify-center transition-all duration-200 hover:scale-105 active:scale-95 cursor-pointer relative group"
+                className="w-10 h-10 rounded-full bg-white hover:bg-stone-100 text-[#1E2420] hover:text-[#3D7B52] flex items-center justify-center transition-all duration-200 hover:scale-105 active:scale-95 cursor-pointer relative group border border-stone-200/60 shadow-2xs"
                 aria-label="Wishlist"
               >
-                <Heart className="w-4 h-4 text-stone-200 group-hover:text-white" />
+                <Heart className="w-4 h-4 text-stone-700 group-hover:text-[#3D7B52] transition-colors" />
                 {wishlistCount > 0 && (
-                  <span className="absolute -top-1 -right-1 w-4 h-4 rounded-full bg-[#84B281] text-[#162017] text-[10px] font-extrabold flex items-center justify-center shadow-xs">
+                  <span className="absolute -top-1 -right-1 w-4 h-4 rounded-full bg-[#3D7B52] text-white text-[10px] font-extrabold flex items-center justify-center shadow-xs">
                     {wishlistCount}
                   </span>
                 )}
-                <span className="absolute right-12 bg-[#1A201B] text-white text-[11px] font-medium px-2.5 py-1 rounded-md shadow-md opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none whitespace-nowrap border border-white/10">
+                <span className="absolute right-12 bg-[#1E2520] text-white text-[11px] font-medium px-2.5 py-1 rounded-md shadow-lg opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none whitespace-nowrap border border-white/10">
                   Wishlist ({wishlistCount})
                 </span>
               </a>
@@ -85,31 +86,31 @@ export const FloatingNav: React.FC<FloatingNavProps> = ({
               {/* Cart Button */}
               <button
                 onClick={onOpenCart}
-                className="w-10 h-10 rounded-full bg-white/10 hover:bg-white/20 text-white flex items-center justify-center transition-all duration-200 hover:scale-105 active:scale-95 cursor-pointer relative group"
+                className="w-10 h-10 rounded-full bg-white hover:bg-stone-100 text-[#1E2420] hover:text-[#3D7B52] flex items-center justify-center transition-all duration-200 hover:scale-105 active:scale-95 cursor-pointer relative group border border-stone-200/60 shadow-2xs"
                 aria-label="Shopping Cart"
               >
-                <ShoppingBag className="w-4 h-4 text-stone-200 group-hover:text-white" />
+                <ShoppingBag className="w-4 h-4 text-stone-700 group-hover:text-[#3D7B52] transition-colors" />
                 {cartCount > 0 && (
-                  <span className="absolute -top-1 -right-1 w-4 h-4 rounded-full bg-[#84B281] text-[#162017] text-[10px] font-extrabold flex items-center justify-center shadow-xs">
+                  <span className="absolute -top-1 -right-1 w-4 h-4 rounded-full bg-[#3D7B52] text-white text-[10px] font-extrabold flex items-center justify-center shadow-xs">
                     {cartCount}
                   </span>
                 )}
-                <span className="absolute right-12 bg-[#1A201B] text-white text-[11px] font-medium px-2.5 py-1 rounded-md shadow-md opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none whitespace-nowrap border border-white/10">
+                <span className="absolute right-12 bg-[#1E2520] text-white text-[11px] font-medium px-2.5 py-1 rounded-md shadow-lg opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none whitespace-nowrap border border-white/10">
                   Cart ({cartCount})
                 </span>
               </button>
 
               {/* Subtle Divider */}
-              <div className="w-5 h-[1px] bg-white/15 my-0.5" />
+              <div className="w-5 h-[1px] bg-stone-200 my-0.5" />
 
               {/* Scroll To Top */}
               <button
                 onClick={scrollToTop}
-                className="w-8 h-8 rounded-full bg-transparent hover:bg-white/10 text-stone-300 hover:text-white flex items-center justify-center transition-all active:scale-90 cursor-pointer group relative"
+                className="w-8 h-8 rounded-full bg-transparent hover:bg-stone-200/60 text-stone-500 hover:text-[#1E2420] flex items-center justify-center transition-all active:scale-90 cursor-pointer group relative"
                 aria-label="Scroll to top"
               >
                 <ArrowUp className="w-3.5 h-3.5" />
-                <span className="absolute right-12 bg-[#1A201B] text-white text-[11px] font-medium px-2.5 py-1 rounded-md shadow-md opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none whitespace-nowrap border border-white/10">
+                <span className="absolute right-12 bg-[#1E2520] text-white text-[11px] font-medium px-2.5 py-1 rounded-md shadow-lg opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none whitespace-nowrap border border-white/10">
                   Top
                 </span>
               </button>
@@ -118,6 +119,7 @@ export const FloatingNav: React.FC<FloatingNavProps> = ({
 
           {/* ========================================================= */}
           {/* MOBILE VIEW: Floating dock at the bottom center ("Thumb Zone") */}
+          {/* Lighter Luxury Theme */}
           {/* ========================================================= */}
           <motion.div
             initial={{ opacity: 0, y: 30, x: '-50%' }}
@@ -126,26 +128,26 @@ export const FloatingNav: React.FC<FloatingNavProps> = ({
             transition={{ type: 'spring', damping: 20, stiffness: 300 }}
             className="md:hidden fixed bottom-5 left-1/2 z-40 select-none"
           >
-            {/* Signature Forest Glass Mobile Pill Dock */}
-            <div className="bg-[#1F2520]/95 backdrop-blur-xl border border-white/20 px-4 py-2.5 rounded-full shadow-[0_12px_40px_rgba(0,0,0,0.55)] flex items-center gap-4.5">
+            {/* Warm Cream Frosted Glass Mobile Pill Dock */}
+            <div className="bg-[#FAF8F5]/95 backdrop-blur-xl border border-stone-200/90 px-4 py-2 rounded-full shadow-[0_12px_35px_rgba(0,0,0,0.15)] flex items-center gap-4">
               {/* Search */}
               <button
                 onClick={onOpenSearch}
-                className="w-9 h-9 rounded-full bg-white/10 active:bg-white/20 text-white flex items-center justify-center transition-transform active:scale-90"
+                className="w-9 h-9 rounded-full bg-white active:bg-stone-100 text-stone-800 flex items-center justify-center transition-transform active:scale-90 border border-stone-200/60 shadow-2xs"
                 aria-label="Search"
               >
-                <Search className="w-4 h-4 text-stone-200" />
+                <Search className="w-4 h-4 text-stone-700" />
               </button>
 
               {/* Wishlist */}
               <a
                 href="#shop"
-                className="w-9 h-9 rounded-full bg-white/10 active:bg-white/20 text-white flex items-center justify-center transition-transform active:scale-90 relative"
+                className="w-9 h-9 rounded-full bg-white active:bg-stone-100 text-stone-800 flex items-center justify-center transition-transform active:scale-90 relative border border-stone-200/60 shadow-2xs"
                 aria-label="Wishlist"
               >
-                <Heart className="w-4 h-4 text-stone-200" />
+                <Heart className="w-4 h-4 text-stone-700" />
                 {wishlistCount > 0 && (
-                  <span className="absolute -top-1 -right-1 w-4 h-4 rounded-full bg-[#84B281] text-[#162017] text-[10px] font-extrabold flex items-center justify-center shadow-xs">
+                  <span className="absolute -top-1 -right-1 w-4 h-4 rounded-full bg-[#3D7B52] text-white text-[10px] font-extrabold flex items-center justify-center shadow-xs">
                     {wishlistCount}
                   </span>
                 )}
@@ -154,12 +156,12 @@ export const FloatingNav: React.FC<FloatingNavProps> = ({
               {/* Cart */}
               <button
                 onClick={onOpenCart}
-                className="w-9 h-9 rounded-full bg-white/10 active:bg-white/20 text-white flex items-center justify-center transition-transform active:scale-90 relative"
+                className="w-9 h-9 rounded-full bg-white active:bg-stone-100 text-stone-800 flex items-center justify-center transition-transform active:scale-90 relative border border-stone-200/60 shadow-2xs"
                 aria-label="Shopping Cart"
               >
-                <ShoppingBag className="w-4 h-4 text-stone-200" />
+                <ShoppingBag className="w-4 h-4 text-stone-700" />
                 {cartCount > 0 && (
-                  <span className="absolute -top-1 -right-1 w-4 h-4 rounded-full bg-[#84B281] text-[#162017] text-[10px] font-extrabold flex items-center justify-center shadow-xs">
+                  <span className="absolute -top-1 -right-1 w-4 h-4 rounded-full bg-[#3D7B52] text-white text-[10px] font-extrabold flex items-center justify-center shadow-xs">
                     {cartCount}
                   </span>
                 )}
@@ -168,7 +170,7 @@ export const FloatingNav: React.FC<FloatingNavProps> = ({
               {/* Quick Shop Button */}
               <a
                 href="#shop"
-                className="bg-[#84B281] active:bg-[#74A371] text-[#162017] text-xs font-bold px-4 py-2 rounded-full shadow-xs transition-transform active:scale-95"
+                className="bg-[#3D7B52] active:bg-[#306040] text-white text-xs font-bold px-4 py-2 rounded-full shadow-xs transition-transform active:scale-95"
               >
                 Shop
               </a>

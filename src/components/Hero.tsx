@@ -30,7 +30,7 @@ export const Hero: React.FC<HeroProps> = ({
         MASTER HERO CARD
         HD Yoga Photo background as requested by user
       */}
-      <div className="relative rounded-none sm:rounded-[2.5rem] lg:rounded-[3rem] overflow-hidden min-h-[620px] sm:min-h-[680px] lg:min-h-[720px] flex flex-col justify-between pt-6 sm:pt-9 lg:pt-11 px-5 sm:px-10 lg:px-12 pb-6 sm:pb-10 lg:pb-12 shadow-2xl w-full">
+      <div className="relative rounded-none sm:rounded-[2.5rem] lg:rounded-[3rem] overflow-hidden min-h-[660px] sm:min-h-[720px] lg:min-h-[760px] flex flex-col justify-between pt-6 sm:pt-9 lg:pt-11 px-5 sm:px-10 lg:px-12 pb-9 sm:pb-14 lg:pb-16 shadow-2xl w-full">
         {/* Background Image: HD Yoga photo at sunset/sunrise */}
         <div className="absolute inset-0 z-0">
           <img
