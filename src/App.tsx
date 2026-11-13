@@ -6,6 +6,8 @@ import { Testimonials } from './components/Testimonials';
 import { GuaranteeBanner } from './components/GuaranteeBanner';
 import { Footer } from './components/Footer';
 import { CartDrawer, CartItem } from './components/CartDrawer';
+import { FloatingNav } from './components/FloatingNav';
+import { SearchModal } from './components/SearchModal';
 
 export const App: React.FC = () => {
   const [cartItems, setCartItems] = useState<CartItem[]>([
@@ -27,6 +29,7 @@ export const App: React.FC = () => {
 
   const [wishlistIds, setWishlistIds] = useState<string[]>(['1', '3']);
   const [isCartOpen, setIsCartOpen] = useState(false);
+  const [isSearchOpen, setIsSearchOpen] = useState(false);
 
   const handleAddToCart = (product: ProductItem) => {
     setCartItems((prev) => {
@@ -89,6 +92,7 @@ export const App: React.FC = () => {
           cartCount={totalCartCount}
           onOpenCart={() => setIsCartOpen(true)}
           wishlistCount={wishlistIds.length}
+          onOpenSearch={() => setIsSearchOpen(true)}
         />
       </div>
 
@@ -122,6 +126,21 @@ export const App: React.FC = () => {
         items={cartItems}
         onUpdateQuantity={handleUpdateQuantity}
         onRemoveItem={handleRemoveItem}
+      />
+
+      {/* Floating Action Dock: Desktop Bottom-Right & Mobile Bottom-Center */}
+      <FloatingNav
+        cartCount={totalCartCount}
+        wishlistCount={wishlistIds.length}
+        onOpenCart={() => setIsCartOpen(true)}
+        onOpenSearch={() => setIsSearchOpen(true)}
+      />
+
+      {/* Live Product Search Modal Overlay */}
+      <SearchModal
+        isOpen={isSearchOpen}
+        onClose={() => setIsSearchOpen(false)}
+        onAddToCart={handleAddToCart}
       />
     </div>
   );

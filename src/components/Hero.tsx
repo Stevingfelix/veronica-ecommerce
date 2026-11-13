@@ -5,12 +5,14 @@ interface HeroProps {
   cartCount: number;
   onOpenCart: () => void;
   wishlistCount: number;
+  onOpenSearch?: () => void;
 }
 
 export const Hero: React.FC<HeroProps> = ({
   cartCount,
   onOpenCart,
   wishlistCount,
+  onOpenSearch,
 }) => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
@@ -78,7 +80,8 @@ export const Hero: React.FC<HeroProps> = ({
           <div className="flex items-center gap-2 sm:gap-2.5">
             {/* Search */}
             <button
-              className="w-9 h-9 rounded-full bg-white/20 hover:bg-white/30 backdrop-blur-md border border-white/25 flex items-center justify-center text-white transition-all shadow-xs"
+              onClick={onOpenSearch}
+              className="w-9 h-9 rounded-full bg-white/20 hover:bg-white/30 backdrop-blur-md border border-white/25 flex items-center justify-center text-white transition-all shadow-xs cursor-pointer active:scale-95"
               aria-label="Search"
             >
               <Search className="w-4 h-4" />
