@@ -58,7 +58,7 @@ export const Testimonials: React.FC = () => {
   };
 
   return (
-    <section className="w-full">
+    <section className="w-full pt-16 sm:pt-24 lg:pt-32">
       {/* Section Header */}
       <div className="text-center max-w-xl mx-auto mb-10 sm:mb-14">
         <h2 className="font-sans font-bold text-3xl sm:text-4xl md:text-5xl text-botanix-forest tracking-tight leading-tight mb-3">
