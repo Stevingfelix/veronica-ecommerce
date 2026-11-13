@@ -6,7 +6,7 @@ export const WhyThousands: React.FC = () => {
     <section className="w-full">
       {/* 
         MASTER CONTAINER:
-        Matches the exact layout, colors, padding, and proportions of the reference design.
+        Exact layout, proportions, and colors matching the reference design.
         Outer dark charcoal forest container with generous rounded corners and crisp padding.
       */}
       <div className="w-full bg-[#242A24] text-white rounded-[2rem] sm:rounded-[2.5rem] lg:rounded-[3rem] p-6 sm:p-10 lg:p-12 shadow-2xl border border-white/5 overflow-hidden">
@@ -25,7 +25,7 @@ export const WhyThousands: React.FC = () => {
             </p>
             <a
               href="#shop"
-              className="inline-flex items-center justify-center bg-[#7CA77B] hover:bg-[#8CB88B] text-[#1B221D] text-xs font-semibold px-5 py-2.5 rounded-full transition-all duration-200 shadow-sm"
+              className="inline-flex items-center justify-center bg-[#7CA77B] hover:bg-[#8CB88B] text-[#1C221D] text-xs font-semibold px-5 py-2.5 rounded-full transition-all duration-200 shadow-sm"
             >
               Shop the ritual
             </a>
@@ -35,16 +35,36 @@ export const WhyThousands: React.FC = () => {
         {/* Main Bento Grid: 40% Left Image Card / 60% Right 2x2 Bento Cards */}
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-5 sm:gap-6 items-stretch w-full">
           {/* 
-            Left Column: Exactly matches reference screenshot:
-            Hand holding glass tumbler with green matcha iced elixir & circular curved text
-            Aspect ratio ~ 1.11 : 1 (width 282 / height 253)
+            Left Column: Full HD Crystal-Clear Studio Photograph (1200x1200px)
+            with circular curved SVG vector text overlay. ZERO blurriness.
           */}
           <div className="lg:col-span-5 w-full aspect-[1.12/1] rounded-2xl sm:rounded-3xl bg-[#CCD8C8] relative overflow-hidden flex items-center justify-center shadow-inner group">
+            {/* High-definition 1200x1200px local asset */}
             <img
-              src="/images/ritual-exact-ref.jpg"
+              src="/images/ritual-matcha-square-hd.jpg"
               alt="Hand holding pure botanical herbal matcha elixir in clear glass tumbler"
               className="w-full h-full object-cover group-hover:scale-102 transition-transform duration-500 rounded-2xl sm:rounded-3xl"
             />
+            {/* Subtle soft gradient overlay */}
+            <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-black/15 pointer-events-none" />
+
+            {/* Circular Curved SVG Text Overlay */}
+            <div className="absolute inset-0 flex items-center justify-center pointer-events-none select-none p-3">
+              <svg viewBox="0 0 400 400" className="w-[84%] h-[84%] max-w-[340px] max-h-[340px]">
+                <defs>
+                  <path
+                    id="ritualCurvePath"
+                    d="M 200, 200 m -135, 0 a 135,135 0 1,1 270,0 a 135,135 0 1,1 -270,0"
+                    fill="none"
+                  />
+                </defs>
+                <text className="text-[10px] font-sans font-medium uppercase tracking-[0.24em] fill-white drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)]">
+                  <textPath href="#ritualCurvePath" startOffset="0%">
+                    the l-theanine effect · fiber fuel · powerful antioxidants · food for your microbiome · goodbye bloat ·
+                  </textPath>
+                </text>
+              </svg>
+            </div>
           </div>
 
           {/* Right Column: 2x2 Bento Feature Cards matching the left card height */}
