@@ -6,12 +6,12 @@ export const WhyThousands: React.FC = () => {
     <section className="w-full">
       {/* 
         MASTER CONTAINER:
-        Reduced to a compact, viewport-fitting container height matching the Hero banner
-        (lg:h-[530px] min-h-[480px]) so all 4 cards and image fit comfortably with ZERO cut-off.
+        Slightly increased container height (lg:h-[580px] min-h-[520px]) providing comfortable 
+        vertical breathing room while keeping all cards fully visible on screen.
       */}
-      <div className="w-full bg-[#222823] text-white rounded-[2rem] sm:rounded-[2.5rem] lg:rounded-[3rem] p-5 sm:p-7 lg:p-8 shadow-2xl overflow-hidden border border-white/5 flex flex-col justify-between lg:h-[530px]">
+      <div className="w-full bg-[#222823] text-white rounded-[2rem] sm:rounded-[2.5rem] lg:rounded-[3rem] p-6 sm:p-8 lg:p-9 shadow-2xl overflow-hidden border border-white/5 flex flex-col justify-between lg:h-[580px] min-h-[520px]">
         {/* Top Header */}
-        <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-4 sm:mb-5 flex-shrink-0">
+        <div className="flex flex-col md:flex-row md:items-end justify-between gap-5 mb-5 sm:mb-6 flex-shrink-0">
           <div>
             <h2 className="font-sans font-bold text-2xl sm:text-3xl lg:text-[2.25rem] text-white tracking-tight leading-[1.15]">
               Why thousands <br />
