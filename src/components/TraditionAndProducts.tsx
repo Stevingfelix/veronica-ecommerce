@@ -314,7 +314,7 @@ export const TraditionAndProducts: React.FC<TraditionAndProductsProps> = ({
         </p>
 
         {/* Filter Pill Row */}
-        <div className="flex items-center justify-center gap-1.5 sm:gap-2 overflow-x-auto pt-8 pb-8 no-scrollbar">
+        <div className="flex items-center justify-center gap-1.5 sm:gap-2 overflow-x-auto pt-6 pb-2 no-scrollbar">
           {categories.map((cat) => {
             const isActive = activeFilter === cat.name;
             return (
@@ -336,8 +336,8 @@ export const TraditionAndProducts: React.FC<TraditionAndProductsProps> = ({
           })}
         </div>
 
-        {/* Product Cards Grid: Exactly 4 Cards Per View with Full Background Photo & Glassmorphism */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 text-left">
+        {/* Product Cards Grid: Generous breathing space below category filter tags */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 text-left mt-8 sm:mt-12 lg:mt-16">
           {currentViewProducts.map((product) => {
             const isWishlisted = wishlistIds.includes(product.id);
 
