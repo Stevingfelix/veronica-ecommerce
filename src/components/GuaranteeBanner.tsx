@@ -2,7 +2,11 @@ import React, { useRef } from 'react';
 import { Star } from 'lucide-react';
 import { motion, useScroll, useTransform, useSpring } from 'framer-motion';
 
-export const GuaranteeBanner: React.FC = () => {
+interface GuaranteeBannerProps {
+  onOpenDoshaQuiz?: () => void;
+}
+
+export const GuaranteeBanner: React.FC<GuaranteeBannerProps> = ({ onOpenDoshaQuiz }) => {
   const sectionRef = useRef<HTMLElement>(null);
 
   // Scroll-based parallax tracking
@@ -120,7 +124,7 @@ export const GuaranteeBanner: React.FC = () => {
             </h2>
 
             <p className="text-xs sm:text-sm md:text-[15px] text-gray-600 max-w-md mx-auto leading-relaxed mb-8">
-              Pick your goal, follow a simple daily ritual, and if you don't feel better in 30 days, we'll refund you.
+              Whole botanicals take time to gently saturate your cells. If your sleep isn't deeper, your mind clearer, and your digestion more at ease within 30 days, we'll refund your order completely.
             </p>
 
             {/* Action Buttons with subtle spring tap feedback */}
@@ -134,14 +138,14 @@ export const GuaranteeBanner: React.FC = () => {
                 <span>Shop the ritual</span>
                 <span className="text-sm font-bold">↗</span>
               </motion.a>
-              <motion.a
+              <motion.button
                 whileHover={{ scale: 1.03 }}
                 whileTap={{ scale: 0.96 }}
-                href="#quiz"
-                className="inline-flex items-center justify-center bg-white hover:bg-stone-50 text-[#162017] text-xs sm:text-sm font-semibold px-6 py-3 rounded-full border border-stone-200 shadow-xs transition-colors duration-200"
+                onClick={onOpenDoshaQuiz}
+                className="inline-flex items-center justify-center bg-white hover:bg-stone-50 text-[#162017] text-xs sm:text-sm font-semibold px-6 py-3 rounded-full border border-stone-200 shadow-xs transition-colors duration-200 cursor-pointer"
               >
                 Take the herb quiz
-              </motion.a>
+              </motion.button>
             </div>
 
             {/* Social Proof & Guarantee Badges */}

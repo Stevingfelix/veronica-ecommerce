@@ -6,6 +6,9 @@ interface HeroProps {
   onOpenCart: () => void;
   wishlistCount: number;
   onOpenSearch?: () => void;
+  onOpenWishlist?: () => void;
+  onOpenAuth?: () => void;
+  onOpenDoshaQuiz?: () => void;
 }
 
 export const Hero: React.FC<HeroProps> = ({
@@ -13,6 +16,9 @@ export const Hero: React.FC<HeroProps> = ({
   onOpenCart,
   wishlistCount,
   onOpenSearch,
+  onOpenWishlist,
+  onOpenAuth,
+  onOpenDoshaQuiz,
 }) => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
@@ -59,19 +65,27 @@ export const Hero: React.FC<HeroProps> = ({
             </span>
           </a>
 
-          {/* Center Pill Nav: Home, Shop, Herbs, Ritual, Journal */}
-          <nav className="hidden md:flex items-center gap-1 bg-white/20 backdrop-blur-md px-4 py-1.5 rounded-full border border-white/25 shadow-sm">
+          {/* Center Text-Only Sleek Navigation with generous breathing room */}
+          <nav className="hidden md:flex items-center gap-9 lg:gap-12 xl:gap-14">
             {navLinks.map((link) => (
               <a
                 key={link.name}
                 href={link.href}
-                className={`px-4 py-1.5 rounded-full text-xs font-semibold tracking-wide transition-all ${
+                className={`group relative py-1 text-sm lg:text-[15px] tracking-wide transition-all duration-200 ${
                   link.active
-                    ? 'bg-white text-[#1C221D] shadow-xs'
-                    : 'text-white/90 hover:text-white hover:bg-white/20'
+                    ? 'text-white font-semibold'
+                    : 'text-white/80 hover:text-white font-medium'
                 }`}
               >
-                {link.name}
+                <span>{link.name}</span>
+                {/* Sleek hairline indicator */}
+                <span
+                  className={`absolute -bottom-1 left-0 right-0 h-[1.5px] bg-white/90 rounded-full transition-all duration-200 origin-center ${
+                    link.active
+                      ? 'opacity-100 scale-x-100'
+                      : 'opacity-0 scale-x-0 group-hover:opacity-100 group-hover:scale-x-100'
+                  }`}
+                />
               </a>
             ))}
           </nav>
@@ -89,7 +103,8 @@ export const Hero: React.FC<HeroProps> = ({
 
             {/* Wishlist */}
             <button
-              className="w-9 h-9 rounded-full bg-white/20 hover:bg-white/30 backdrop-blur-md border border-white/25 flex items-center justify-center text-white transition-all shadow-xs relative"
+              onClick={onOpenWishlist}
+              className="w-9 h-9 rounded-full bg-white/20 hover:bg-white/30 backdrop-blur-md border border-white/25 flex items-center justify-center text-white transition-all shadow-xs relative cursor-pointer active:scale-95"
               aria-label="Wishlist"
             >
               <Heart className="w-4 h-4" />
@@ -103,7 +118,7 @@ export const Hero: React.FC<HeroProps> = ({
             {/* Cart */}
             <button
               onClick={onOpenCart}
-              className="w-9 h-9 rounded-full bg-white/20 hover:bg-white/30 backdrop-blur-md border border-white/25 flex items-center justify-center text-white transition-all shadow-xs relative"
+              className="w-9 h-9 rounded-full bg-white/20 hover:bg-white/30 backdrop-blur-md border border-white/25 flex items-center justify-center text-white transition-all shadow-xs relative cursor-pointer active:scale-95"
               aria-label="Shopping Cart"
             >
               <ShoppingBag className="w-4 h-4" />
@@ -115,9 +130,9 @@ export const Hero: React.FC<HeroProps> = ({
             </button>
 
             {/* Header Right Log In Pill */}
-            <a
-              href="#login"
-              className="hidden sm:inline-flex items-center gap-2 bg-white hover:bg-stone-100 text-[#1C221D] text-xs font-bold tracking-wide px-4.5 py-2.5 rounded-full shadow-sm transition-all ml-1.5 cursor-pointer"
+            <button
+              onClick={onOpenAuth}
+              className="hidden sm:inline-flex items-center gap-2 bg-white/20 hover:bg-white/30 backdrop-blur-md border border-white/25 text-white text-xs font-semibold px-4 py-2 rounded-full shadow-xs transition-all ml-1.5 cursor-pointer active:scale-95"
             >
               <svg
                 viewBox="0 0 24 24"
@@ -127,7 +142,7 @@ export const Hero: React.FC<HeroProps> = ({
                 <circle cx="12" cy="7" r="4" />
               </svg>
               <span>Log In</span>
-            </a>
+            </button>
 
             {/* Mobile Menu Button */}
             <button
@@ -153,10 +168,12 @@ export const Hero: React.FC<HeroProps> = ({
                 {link.name}
               </a>
             ))}
-            <a
-              href="#login"
-              onClick={() => setMobileMenuOpen(false)}
-              className="flex items-center justify-center gap-2 bg-[#3D7B52] hover:bg-[#326442] text-white text-xs font-bold tracking-wide text-center py-3 rounded-full mt-2"
+            <button
+              onClick={() => {
+                setMobileMenuOpen(false);
+                if (onOpenAuth) onOpenAuth();
+              }}
+              className="flex items-center justify-center gap-2 bg-[#3D7B52] hover:bg-[#326442] text-white text-xs font-bold tracking-wide text-center py-3 rounded-full mt-2 cursor-pointer"
             >
               <svg
                 viewBox="0 0 24 24"
@@ -166,7 +183,7 @@ export const Hero: React.FC<HeroProps> = ({
                 <circle cx="12" cy="7" r="4" />
               </svg>
               <span>Log In</span>
-            </a>
+            </button>
           </div>
         )}
 
@@ -174,10 +191,10 @@ export const Hero: React.FC<HeroProps> = ({
           HERO CONTENT (Rating, Headline with Handwriting Script, Subtitle, CTAs, Floating 92% Card)
         */}
         <div className="relative z-10 grid grid-cols-1 lg:grid-cols-12 gap-8 items-end mt-12 sm:mt-16 pb-2">
-          {/* Left Column: Headlines & Actions */}
-          <div className="lg:col-span-8 max-w-xl">
+          {/* Left Column: Headlines & Actions - Centered on Mobile, Left-aligned on Desktop */}
+          <div className="lg:col-span-8 max-w-xl flex flex-col items-center sm:items-start text-center sm:text-left mx-auto lg:mx-0">
             {/* Rating Badge: 3 avatars + 5 stars + 4.9 · 12k+ daily rituals */}
-            <div className="inline-flex items-center gap-2.5 bg-black/40 backdrop-blur-md border border-white/20 px-3.5 py-1.5 rounded-full mb-5">
+            <div className="inline-flex items-center gap-2.5 bg-black/40 backdrop-blur-md border border-white/20 px-3.5 py-1.5 rounded-full mb-5 mx-auto sm:mx-0">
               <div className="flex -space-x-1.5">
                 <img
                   src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=100&h=100&q=80"
@@ -208,41 +225,41 @@ export const Hero: React.FC<HeroProps> = ({
             </div>
 
             {/* Main Headline with Handwriting Cursive Font for "Inner Rhythm" */}
-            <h1 className="text-white font-sans font-extrabold text-4xl sm:text-5xl md:text-6xl lg:text-[4.1rem] tracking-tight leading-[1.1] mb-4 drop-shadow-sm">
-              Return to Your <br />
-              Natural <span className="font-handwriting text-[1.18em] font-normal text-white">Inner Rhythm</span>
+            <h1 className="text-white font-sans font-extrabold text-4xl sm:text-5xl md:text-6xl lg:text-[4.1rem] tracking-tight leading-[1.1] mb-4 drop-shadow-sm text-center sm:text-left">
+              Return to Your <br className="hidden sm:inline" />
+              <span className="sm:hidden"> </span>Natural <span className="font-handwriting text-[1.18em] font-normal text-white">Inner Rhythm</span>
             </h1>
 
             {/* Subheading */}
-            <p className="text-white/90 text-xs sm:text-sm md:text-base leading-relaxed max-w-lg mb-7 drop-shadow-xs">
-              Four trusty herbs in one easy daily routine, all plant-based and perfect for real life every day!
+            <p className="text-white/90 text-xs sm:text-sm md:text-base leading-relaxed max-w-lg mb-7 drop-shadow-xs text-center sm:text-left mx-auto sm:mx-0">
+              Single-origin adaptogens and whole Ayurvedic botanicals formulated for everyday biological balance. One uplifting morning blend, one deeply restorative evening.
             </p>
 
-            {/* Call To Action Buttons */}
-            <div className="flex flex-wrap items-center gap-3">
+            {/* Call To Action Buttons - Centered on Mobile */}
+            <div className="flex flex-col sm:flex-row items-center justify-center sm:justify-start gap-3 w-full sm:w-auto">
               {/* Green Pill Button */}
               <a
                 href="#shop"
-                className="bg-[#488B5B] hover:bg-[#3B734A] text-white text-xs sm:text-sm font-bold uppercase tracking-wider px-6 py-3 rounded-full shadow-lg transition-all transform hover:-translate-y-0.5"
+                className="bg-[#488B5B] hover:bg-[#3B734A] text-white text-xs sm:text-sm font-bold uppercase tracking-wider px-6 py-3 rounded-full shadow-lg transition-all transform hover:-translate-y-0.5 text-center"
               >
                 Shop the ritual
               </a>
 
               {/* White Frosted Glass Pill Button */}
-              <a
-                href="#quiz"
-                className="bg-white/20 hover:bg-white/30 backdrop-blur-md text-white text-xs sm:text-sm font-semibold px-6 py-3 rounded-full border border-white/30 transition-all"
+              <button
+                onClick={onOpenDoshaQuiz}
+                className="bg-white/20 hover:bg-white/30 backdrop-blur-md text-white text-xs sm:text-sm font-semibold px-6 py-3 rounded-full border border-white/30 transition-all text-center cursor-pointer active:scale-95"
               >
                 Take the dosha quiz
-              </a>
+              </button>
             </div>
           </div>
 
-          {/* Right Column: Floating 92% Proof Card with Green Progress Bar */}
-          <div className="lg:col-span-4 flex justify-start lg:justify-end">
-            <div className="bg-white rounded-[1.5rem] sm:rounded-[1.75rem] shadow-2xl overflow-hidden w-[205px] sm:w-[225px] transform hover:scale-105 transition-all duration-300">
-              {/* Full Card Width Image: Flush with top and sides with zero outer padding */}
-              <div className="w-full h-32 sm:h-36 overflow-hidden bg-[#FAF7F2]">
+          {/* Right Column: Floating 92% Proof Card with Green Progress Bar - Full Width to the right on Mobile */}
+          <div className="lg:col-span-4 flex justify-center sm:justify-start lg:justify-end w-full">
+            <div className="bg-white rounded-[1.5rem] sm:rounded-[1.75rem] shadow-2xl overflow-hidden w-full sm:w-[225px] transform sm:hover:scale-105 transition-all duration-300">
+              {/* Full Card Width Image */}
+              <div className="w-full h-40 sm:h-36 overflow-hidden bg-[#FAF7F2]">
                 <img
                   src="/images/card-92-exact-hd.jpg?v=2"
                   alt="Herbal elixir bottle with lavender and botanicals"
@@ -251,15 +268,15 @@ export const Hero: React.FC<HeroProps> = ({
               </div>
 
               {/* Text & Progress Section */}
-              <div className="p-4 sm:p-5 pt-3 sm:pt-4 bg-white">
+              <div className="p-4 sm:p-5 pt-3.5 sm:pt-4 bg-white">
                 <div className="font-display font-extrabold text-2xl sm:text-3xl text-[#1C221D] leading-none mb-1">
                   92%
                 </div>
-                <p className="text-[11px] text-gray-500 font-medium leading-snug mb-3">
+                <p className="text-[11px] sm:text-xs text-gray-500 font-medium leading-snug mb-3">
                   feel calmer in 4 weeks
                 </p>
                 {/* Green Progress Indicator Line */}
-                <div className="w-full h-1 bg-gray-100 rounded-full overflow-hidden">
+                <div className="w-full h-1.5 sm:h-1 bg-gray-100 rounded-full overflow-hidden">
                   <div className="h-full bg-[#3D7B52] rounded-full w-[92%]" />
                 </div>
               </div>

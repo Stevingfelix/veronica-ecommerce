@@ -7,12 +7,14 @@ interface SearchModalProps {
   isOpen: boolean;
   onClose: () => void;
   onAddToCart: (product: any) => void;
+  onSelectProduct?: (product: any) => void;
 }
 
 export const SearchModal: React.FC<SearchModalProps> = ({
   isOpen,
   onClose,
   onAddToCart,
+  onSelectProduct,
 }) => {
   const [query, setQuery] = useState('');
   const [selectedTag, setSelectedTag] = useState<string>('All');
@@ -99,10 +101,10 @@ export const SearchModal: React.FC<SearchModalProps> = ({
                 )}
                 <button
                   onClick={onClose}
-                  className="w-8 h-8 rounded-full bg-stone-100 hover:bg-stone-200 flex items-center justify-center text-stone-600 hover:text-stone-900 transition-colors text-xs cursor-pointer ml-1"
+                  className="group w-8 h-8 rounded-full bg-stone-150 hover:bg-[#3D7B52] flex items-center justify-center text-stone-600 hover:text-white transition-all duration-300 hover:rotate-90 active:scale-90 text-xs cursor-pointer ml-1"
                   aria-label="Close search"
                 >
-                  <X className="w-4 h-4" />
+                  <X className="w-4 h-4 transition-transform duration-300 group-hover:scale-110" />
                 </button>
               </div>
             </div>
@@ -142,6 +144,12 @@ export const SearchModal: React.FC<SearchModalProps> = ({
                 filteredProducts.map((product) => (
                   <div
                     key={product.id}
+                    onClick={() => {
+                      if (onSelectProduct) {
+                        onSelectProduct(product);
+                        onClose();
+                      }
+                    }}
                     className="flex items-center justify-between gap-4 p-3 rounded-2xl bg-white hover:bg-[#F7F4EC] border border-stone-200/70 hover:border-[#3D7B52]/40 transition-all shadow-2xs hover:shadow-xs group cursor-pointer"
                   >
                     <div className="flex items-center gap-3.5 min-w-0">

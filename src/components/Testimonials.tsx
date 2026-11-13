@@ -139,13 +139,13 @@ export const Testimonials: React.FC = () => {
       {/* Section Header with generous breathing room */}
       <div className="text-center max-w-xl mx-auto mb-10 sm:mb-14">
         <h2 className="font-sans font-bold text-3xl sm:text-4xl md:text-5xl text-[#161B16] tracking-tight leading-tight mb-3">
-          Real vibes,{' '}
+          Real rhythms,{' '}
           <span className="font-handwriting text-[1.16em] font-normal text-[#161B16]">
-            real folks
+            honest transformations
           </span>
         </h2>
         <p className="text-xs sm:text-sm text-gray-600">
-          Thousands of everyday folks made their wellness part of their day. Here’s what keeps them here.
+          From chronic brain fog and shallow sleep to steady vitality. Notes from our community.
         </p>
       </div>
 

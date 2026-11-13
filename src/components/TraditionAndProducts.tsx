@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { ChevronLeft, ChevronRight, Star, Heart, Plus } from 'lucide-react';
+import { ChevronLeft, ChevronRight, Star, Heart, Plus, Eye } from 'lucide-react';
 import { PRODUCTS_DATABASE, ProductItem } from '../data/products';
 
 export type { ProductItem };
@@ -8,12 +8,14 @@ interface TraditionAndProductsProps {
   onAddToCart: (product: ProductItem) => void;
   onToggleWishlist: (productId: string) => void;
   wishlistIds: string[];
+  onSelectProduct?: (product: ProductItem) => void;
 }
 
 export const TraditionAndProducts: React.FC<TraditionAndProductsProps> = ({
   onAddToCart,
   onToggleWishlist,
   wishlistIds,
+  onSelectProduct,
 }) => {
   const [activeFilter, setActiveFilter] = useState('All');
   const [currentPage, setCurrentPage] = useState(1);
@@ -84,12 +86,12 @@ export const TraditionAndProducts: React.FC<TraditionAndProductsProps> = ({
       <section id="about" className="w-full pt-14 sm:pt-24 lg:pt-32">
         {/* Header Row */}
         <div className="flex flex-col md:flex-row md:items-start justify-between gap-6 mb-8 sm:mb-10">
-          {/* Left Title: Rooted in tradition, made for today with Handwriting font */}
+          {/* Left Title: Rooted in ancient botany, verified by modern science */}
           <div>
             <h2 className="font-sans font-bold text-3xl sm:text-4xl md:text-[2.65rem] text-[#161B16] tracking-tight leading-[1.15]">
-              Rooted in tradition, <br />
+              Rooted in ancient botany, <br />
               <span className="font-handwriting text-[1.16em] font-normal text-[#161B16]">
-                made for today
+                verified by modern science
               </span>
             </h2>
           </div>
@@ -97,7 +99,7 @@ export const TraditionAndProducts: React.FC<TraditionAndProductsProps> = ({
           {/* Right Description & Our Story CTA Button */}
           <div className="max-w-xs sm:max-w-sm flex flex-col items-start gap-4">
             <p className="text-xs sm:text-[13px] text-gray-600 leading-relaxed font-normal">
-              We source whole herbs from small Ayurvedic farms to create simple daily rituals, keeping it pure for your body.
+              Crafted from single-origin botanicals nurtured in the mineral-rich soils of Kerala. We harvest at peak potency to protect delicate plant enzymes that your body recognizes intuitively.
             </p>
             <a
               href="#about"
@@ -304,13 +306,13 @@ export const TraditionAndProducts: React.FC<TraditionAndProductsProps> = ({
       {/* ========================================================= */}
       <section id="shop" className="w-full text-center pt-12 sm:pt-16 lg:pt-20">
         <h2 className="font-sans font-bold text-3xl sm:text-4xl md:text-5xl text-[#161B16] tracking-tight leading-tight mb-3">
-          Shop by how you{' '}
+          Targeted blends for how you{' '}
           <span className="font-handwriting text-[1.16em] font-normal text-[#161B16]">
             want to feel
           </span>
         </h2>
         <p className="text-xs sm:text-sm text-gray-600">
-          Each blend is carefully crafted to help you quickly find your ideal ritual.
+          Each single-origin formulation is calibrated to restore equilibrium and support your daily circadian rhythm.
         </p>
 
         {/* Filter Pill Row */}
@@ -347,14 +349,18 @@ export const TraditionAndProducts: React.FC<TraditionAndProductsProps> = ({
                 className="group relative rounded-3xl overflow-hidden min-h-[540px] sm:min-h-[580px] lg:min-h-[600px] flex flex-col justify-between p-4 sm:p-5 shadow-sm hover:shadow-2xl transition-all duration-500 transform hover:-translate-y-1.5 bg-[#F5F2EB]"
               >
                 {/* 1. Full Card Background Image with Plain / Studio Background, framed in top portion */}
-                <img
-                  src={product.image}
-                  alt={product.name}
-                  className="absolute inset-0 w-full h-full object-cover object-[center_18%] group-hover:scale-105 transition-transform duration-700 z-0"
-                />
-
-                {/* Subtle soft gradient overlay so bottom badge pops crisply without darkening the product */}
-                <div className="absolute inset-0 bg-gradient-to-t from-black/45 via-transparent to-black/10 z-0 pointer-events-none" />
+                <div
+                  onClick={() => onSelectProduct && onSelectProduct(product)}
+                  className="absolute inset-0 cursor-pointer z-0"
+                >
+                  <img
+                    src={product.image}
+                    alt={product.name}
+                    className="w-full h-full object-cover object-[center_18%] group-hover:scale-105 transition-transform duration-700"
+                  />
+                  {/* Subtle soft gradient overlay so bottom badge pops crisply without darkening the product */}
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/45 via-transparent to-black/10" />
+                </div>
 
                 {/* 2. Top Header Elements: Frosted Category Pill + Heart Wishlist Button */}
                 <div className="relative z-10 flex items-center justify-between">
@@ -408,11 +414,14 @@ export const TraditionAndProducts: React.FC<TraditionAndProductsProps> = ({
                     </div>
                   </div>
 
-                  <h3 className="font-sans font-bold text-base sm:text-lg text-[#161B16] group-hover:text-[#245236] transition-colors leading-tight drop-shadow-xs">
+                  <h3
+                    onClick={() => onSelectProduct && onSelectProduct(product)}
+                    className="font-sans font-bold text-base sm:text-lg text-[#161B16] group-hover:text-[#245236] transition-colors leading-tight drop-shadow-xs cursor-pointer"
+                  >
                     {product.name}
                   </h3>
 
-                  <div className="pt-2 border-t border-black/5 flex items-center justify-between">
+                  <div className="pt-2 border-t border-black/5 flex items-center justify-between gap-2">
                     <div>
                       <span className="text-[10px] text-gray-500 uppercase tracking-wide block leading-none">
                         Ritual
@@ -422,13 +431,26 @@ export const TraditionAndProducts: React.FC<TraditionAndProductsProps> = ({
                       </span>
                     </div>
 
-                    <button
-                      onClick={() => onAddToCart(product)}
-                      className="w-9 h-9 sm:w-10 sm:h-10 rounded-full bg-[#3D7B52] hover:bg-[#2E5F3F] text-white flex items-center justify-center shadow-md hover:scale-110 active:scale-95 transition-all"
-                      aria-label={`Add ${product.name} to Cart`}
-                    >
-                      <Plus className="w-4 h-4 sm:w-5 sm:h-5 stroke-[2.5]" />
-                    </button>
+                    <div className="flex items-center gap-1.5 sm:gap-2">
+                      {/* View Product Details Button */}
+                      <button
+                        onClick={() => onSelectProduct && onSelectProduct(product)}
+                        className="px-3 py-1.5 sm:py-2 rounded-full bg-white/80 hover:bg-white text-[#161B16] text-xs font-bold border border-black/5 shadow-2xs hover:shadow-xs hover:scale-105 active:scale-95 transition-all flex items-center gap-1.5 cursor-pointer"
+                        aria-label={`View details for ${product.name}`}
+                      >
+                        <Eye className="w-3.5 h-3.5 text-[#3D7B52]" />
+                        <span>View</span>
+                      </button>
+
+                      {/* Add to Cart Button */}
+                      <button
+                        onClick={() => onAddToCart(product)}
+                        className="w-9 h-9 sm:w-10 sm:h-10 rounded-full bg-[#3D7B52] hover:bg-[#2E5F3F] text-white flex items-center justify-center shadow-md hover:scale-110 active:scale-95 transition-all cursor-pointer"
+                        aria-label={`Add ${product.name} to Cart`}
+                      >
+                        <Plus className="w-4 h-4 sm:w-5 sm:h-5 stroke-[2.5]" />
+                      </button>
+                    </div>
                   </div>
                 </div>
               </div>

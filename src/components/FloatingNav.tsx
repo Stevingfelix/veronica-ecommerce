@@ -7,6 +7,7 @@ interface FloatingNavProps {
   wishlistCount: number;
   onOpenCart: () => void;
   onOpenSearch: () => void;
+  onOpenWishlist?: () => void;
 }
 
 export const FloatingNav: React.FC<FloatingNavProps> = ({
@@ -14,6 +15,7 @@ export const FloatingNav: React.FC<FloatingNavProps> = ({
   wishlistCount,
   onOpenCart,
   onOpenSearch,
+  onOpenWishlist,
 }) => {
   const [isVisible, setIsVisible] = useState(false);
 
@@ -67,8 +69,8 @@ export const FloatingNav: React.FC<FloatingNavProps> = ({
               </button>
 
               {/* Dark Wishlist Icon Button */}
-              <a
-                href="#shop"
+              <button
+                onClick={onOpenWishlist}
                 className="w-10 h-10 rounded-full hover:bg-black/5 active:bg-black/10 text-[#1E2420] flex items-center justify-center transition-all duration-200 hover:scale-105 active:scale-95 cursor-pointer relative group"
                 aria-label="Wishlist"
               >
@@ -81,7 +83,7 @@ export const FloatingNav: React.FC<FloatingNavProps> = ({
                 <span className="absolute right-12 bg-[#1E2420] text-white text-[11px] font-medium px-2.5 py-1 rounded-md opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none whitespace-nowrap shadow-sm">
                   Wishlist ({wishlistCount})
                 </span>
-              </a>
+              </button>
 
               {/* Dark Cart Icon Button */}
               <button
@@ -140,9 +142,9 @@ export const FloatingNav: React.FC<FloatingNavProps> = ({
               </button>
 
               {/* Wishlist */}
-              <a
-                href="#shop"
-                className="w-9 h-9 rounded-full hover:bg-black/5 active:bg-black/10 text-[#1E2420] flex items-center justify-center transition-transform active:scale-90 relative"
+              <button
+                onClick={onOpenWishlist}
+                className="w-9 h-9 rounded-full hover:bg-black/5 active:bg-black/10 text-[#1E2420] flex items-center justify-center transition-transform active:scale-90 relative cursor-pointer"
                 aria-label="Wishlist"
               >
                 <Heart className="w-4 h-4 text-[#1E2420]" />
@@ -151,7 +153,7 @@ export const FloatingNav: React.FC<FloatingNavProps> = ({
                     {wishlistCount}
                   </span>
                 )}
-              </a>
+              </button>
 
               {/* Cart */}
               <button

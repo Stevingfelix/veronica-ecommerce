@@ -52,9 +52,10 @@ export const CartDrawer: React.FC<CartDrawerProps> = ({
             </div>
             <button
               onClick={onClose}
-              className="p-2 rounded-full hover:bg-black/5 text-gray-500 hover:text-black transition-colors"
+              className="group p-2 rounded-full hover:bg-[#3D7B52] text-gray-500 hover:text-white transition-all duration-300 hover:rotate-90 active:scale-90 cursor-pointer"
+              aria-label="Close cart"
             >
-              <X className="w-5 h-5" />
+              <X className="w-5 h-5 transition-transform duration-300 group-hover:scale-110" />
             </button>
           </div>
 
