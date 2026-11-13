@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { Star, ChevronLeft, ChevronRight } from 'lucide-react';
 
 interface Testimonial {
@@ -13,9 +13,11 @@ interface Testimonial {
 
 export const Testimonials: React.FC = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
+  const [prevIndex, setPrevIndex] = useState<number | null>(null);
+  const [isAnimating, setIsAnimating] = useState(false);
+  const [progress, setProgress] = useState(0);
   const [isPaused, setIsPaused] = useState(false);
   const [isStackHovered, setIsStackHovered] = useState(false);
-  const [isTransitioning, setIsTransitioning] = useState(false);
 
   const testimonials: Testimonial[] = [
     {
@@ -61,34 +63,49 @@ export const Testimonials: React.FC = () => {
   ];
 
   const current = testimonials[currentIndex];
+  const ROTATION_TIME = 3600; // 3.6s snappy, animated rotation
+  const animTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
-  const handlePrev = () => {
-    setIsTransitioning(true);
-    setCurrentIndex((prev) => (prev === 0 ? testimonials.length - 1 : prev - 1));
-    setTimeout(() => setIsTransitioning(false), 300);
+  const goToSlide = (nextIndex: number) => {
+    if (nextIndex === currentIndex || isAnimating) return;
+    setPrevIndex(currentIndex);
+    setIsAnimating(true);
+    setCurrentIndex(nextIndex);
+    setProgress(0);
+
+    if (animTimeoutRef.current) clearTimeout(animTimeoutRef.current);
+    animTimeoutRef.current = setTimeout(() => {
+      setIsAnimating(false);
+      setPrevIndex(null);
+    }, 450);
   };
 
   const handleNext = () => {
-    setIsTransitioning(true);
-    setCurrentIndex((prev) => (prev === testimonials.length - 1 ? 0 : prev + 1));
-    setTimeout(() => setIsTransitioning(false), 300);
+    goToSlide((currentIndex + 1) % testimonials.length);
   };
 
-  const handleSelect = (idx: number) => {
-    if (idx === currentIndex) return;
-    setIsTransitioning(true);
-    setCurrentIndex(idx);
-    setTimeout(() => setIsTransitioning(false), 300);
+  const handlePrev = () => {
+    goToSlide((currentIndex - 1 + testimonials.length) % testimonials.length);
   };
 
-  // Auto-play interval that pauses on mouse hover
+  // Live countdown progress timer with auto-advance
   useEffect(() => {
     if (isPaused) return;
-    const timer = setInterval(() => {
-      handleNext();
-    }, 7000);
-    return () => clearInterval(timer);
-  }, [isPaused, currentIndex]);
+
+    const intervalStep = 40; // 40ms updates for fluid progress bar
+    const progressTimer = setInterval(() => {
+      setProgress((prev) => {
+        const nextVal = prev + (intervalStep / ROTATION_TIME) * 100;
+        if (nextVal >= 100) {
+          handleNext();
+          return 0;
+        }
+        return nextVal;
+      });
+    }, intervalStep);
+
+    return () => clearInterval(progressTimer);
+  }, [isPaused, currentIndex, isAnimating]);
 
   // Keyboard navigation
   useEffect(() => {
@@ -98,10 +115,27 @@ export const Testimonials: React.FC = () => {
     };
     window.addEventListener('keydown', handleKeyDown);
     return () => window.removeEventListener('keydown', handleKeyDown);
-  }, []);
+  }, [currentIndex, isAnimating]);
 
   return (
     <section className="w-full pt-16 sm:pt-24 lg:pt-32">
+      {/* Dynamic Keyframe style tag for silky smooth quote animation */}
+      <style>{`
+        @keyframes testimonialEnter {
+          from {
+            opacity: 0;
+            transform: translateY(10px);
+          }
+          to {
+            opacity: 1;
+            transform: translateY(0);
+          }
+        }
+        .animate-quote-enter {
+          animation: testimonialEnter 380ms cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        }
+      `}</style>
+
       {/* Section Header with generous breathing room */}
       <div className="text-center max-w-xl mx-auto mb-10 sm:mb-14">
         <h2 className="font-sans font-bold text-3xl sm:text-4xl md:text-5xl text-[#161B16] tracking-tight leading-tight mb-3">
@@ -117,7 +151,7 @@ export const Testimonials: React.FC = () => {
 
       {/* 
         MASTER TESTIMONIAL CONTAINER
-        Clean, full-width container matching WhyThousands section width
+        Clean, full-width container matching WhyThousands section
         Dark charcoal-forest background with generous rounded corners and crisp padding
       */}
       <div
@@ -129,7 +163,7 @@ export const Testimonials: React.FC = () => {
         }}
       >
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
-          {/* Left Column: Rating, Quote, Author, Bottom Control Bar */}
+          {/* Left Column: Rating, Animated Quote, Author, Bottom Control Bar */}
           <div className="lg:col-span-7 flex flex-col justify-between h-full min-h-[320px]">
             <div>
               {/* Star Rating: 5 Golden Stars + 4.9/5 text */}
@@ -144,23 +178,24 @@ export const Testimonials: React.FC = () => {
                 </span>
               </div>
 
-              {/* Animated Quote */}
-              <blockquote
-                key={current.name}
-                className={`font-sans font-normal text-lg sm:text-2xl lg:text-[1.65rem] text-white leading-snug sm:leading-relaxed tracking-tight mb-8 transition-all duration-300 ${
-                  isTransitioning ? 'opacity-40 translate-y-1' : 'opacity-100 translate-y-0'
-                }`}
-              >
-                “{current.quote}”
-              </blockquote>
+              {/* Animated Quote with smooth transition on change */}
+              <div className="min-h-[130px] sm:min-h-[115px] flex items-start mb-8">
+                <blockquote
+                  key={current.quote}
+                  className="font-sans font-normal text-lg sm:text-2xl lg:text-[1.65rem] text-white leading-snug sm:leading-relaxed tracking-tight animate-quote-enter"
+                >
+                  “{current.quote}”
+                </blockquote>
+              </div>
 
-              {/* Author Info Row + Indicator Pills */}
+              {/* Author Info Row + Live Progress Indicator Dots */}
               <div className="flex items-center justify-between gap-4 mb-6">
                 <div className="flex items-center gap-3">
                   <img
+                    key={current.avatar}
                     src={current.avatar}
                     alt={current.name}
-                    className="w-10 h-10 rounded-full object-cover border-2 border-white/20 shadow-xs"
+                    className="w-10 h-10 rounded-full object-cover border-2 border-white/20 shadow-xs animate-quote-enter"
                   />
                   <div>
                     <div className="font-semibold text-sm sm:text-base text-[#86B385]">
@@ -172,20 +207,33 @@ export const Testimonials: React.FC = () => {
                   </div>
                 </div>
 
-                {/* Progress Indicator Dots: Active Green Pill + Inactive Dots */}
-                <div className="flex items-center gap-1.5">
-                  {testimonials.map((_, idx) => (
-                    <button
-                      key={idx}
-                      onClick={() => handleSelect(idx)}
-                      className={`h-1.5 rounded-full transition-all duration-300 cursor-pointer ${
-                        idx === currentIndex
-                          ? 'w-6 bg-[#7CA77B]'
-                          : 'w-1.5 bg-white/25 hover:bg-white/50'
-                      }`}
-                      aria-label={`Go to slide ${idx + 1}`}
-                    />
-                  ))}
+                {/* Progress Indicator Dots: Active Green Pill with Live Countdown + Inactive Dots */}
+                <div className="flex items-center gap-2">
+                  {testimonials.map((_, idx) => {
+                    const isActive = idx === currentIndex;
+                    return (
+                      <button
+                        key={idx}
+                        onClick={() => goToSlide(idx)}
+                        className={`relative h-2 rounded-full overflow-hidden transition-all duration-300 cursor-pointer ${
+                          isActive
+                            ? 'w-8 bg-white/20'
+                            : 'w-2 bg-white/25 hover:bg-white/40'
+                        }`}
+                        aria-label={`Go to slide ${idx + 1}`}
+                      >
+                        {isActive && (
+                          <div
+                            className="absolute inset-y-0 left-0 bg-[#7CA77B] rounded-full"
+                            style={{
+                              width: `${progress}%`,
+                              transition: isPaused ? 'none' : 'width 40ms linear',
+                            }}
+                          />
+                        )}
+                      </button>
+                    );
+                  })}
                 </div>
               </div>
             </div>
@@ -196,14 +244,14 @@ export const Testimonials: React.FC = () => {
               <div className="flex items-center gap-2">
                 <button
                   onClick={handlePrev}
-                  className="w-8 h-8 rounded-full border border-white/20 hover:border-white/40 bg-white/5 hover:bg-white/15 text-white/80 hover:text-white flex items-center justify-center transition-all active:scale-95 cursor-pointer shadow-xs"
+                  className="w-8 h-8 rounded-full border border-white/20 hover:border-white/40 bg-white/5 hover:bg-white/15 text-white/80 hover:text-white flex items-center justify-center transition-all active:scale-90 cursor-pointer shadow-xs"
                   aria-label="Previous Testimonial"
                 >
                   <ChevronLeft className="w-4 h-4" />
                 </button>
                 <button
                   onClick={handleNext}
-                  className="w-8 h-8 rounded-full border border-white/20 hover:border-white/40 bg-white/5 hover:bg-white/15 text-white/80 hover:text-white flex items-center justify-center transition-all active:scale-95 cursor-pointer shadow-xs"
+                  className="w-8 h-8 rounded-full border border-white/20 hover:border-white/40 bg-white/5 hover:bg-white/15 text-white/80 hover:text-white flex items-center justify-center transition-all active:scale-90 cursor-pointer shadow-xs"
                   aria-label="Next Testimonial"
                 >
                   <ChevronRight className="w-4 h-4" />
@@ -226,7 +274,7 @@ export const Testimonials: React.FC = () => {
                       alt={t.name}
                       onClick={(e) => {
                         e.stopPropagation();
-                        handleSelect(idx);
+                        goToSlide(idx);
                       }}
                       className={`w-5 h-5 rounded-full object-cover border border-[#242A24] transition-all hover:scale-125 hover:z-20 ${
                         idx === (currentIndex + 1) % testimonials.length
@@ -242,86 +290,116 @@ export const Testimonials: React.FC = () => {
           </div>
 
           {/* 
-            Right Column: 3D Physical Card Deck Stack
-            Matches the reference sample with layered cards visibly fanning out to the right
+            Right Column: Animated 3D Physical Card Deck Stack
+            Smoothly flips and rotates cards with each change!
           */}
-          <div className="lg:col-span-5 flex justify-center lg:justify-end pr-6 sm:pr-8 xl:pr-12">
+          <div className="lg:col-span-5 flex justify-center lg:justify-end pr-6 sm:pr-8 xl:pr-14">
             <div
               className="relative w-[260px] sm:w-[290px] lg:w-[310px] h-[330px] sm:h-[360px] lg:h-[390px] cursor-pointer select-none"
               onMouseEnter={() => setIsStackHovered(true)}
               onMouseLeave={() => setIsStackHovered(false)}
               onClick={handleNext}
-              title="Click card stack to view next story"
+              title="Click card to view next testimonial"
             >
-              {/* 
-                CARD 3 (Furthest Back Layer):
-                Visible rounded slate card tab peeking out the furthest to the right
-              */}
-              <div
-                className="absolute inset-0 rounded-2xl sm:rounded-3xl bg-[#353D36] border border-white/10 shadow-lg transition-all duration-500 ease-out pointer-events-none"
-                style={{
-                  transform: `translateX(${isStackHovered ? 48 : 34}px) scaleY(0.90)`,
-                  transformOrigin: 'center left',
-                  zIndex: 5,
-                  opacity: 0.7,
-                }}
-              />
+              {testimonials.map((t, idx) => {
+                // If this is the card that just transitioned away
+                if (idx === prevIndex && isAnimating) {
+                  return (
+                    <div
+                      key={t.name}
+                      className="absolute inset-0 rounded-2xl sm:rounded-3xl overflow-hidden shadow-2xl border border-white/20 bg-[#2C342D] pointer-events-none"
+                      style={{
+                        transform: 'translateX(-45px) rotate(-5deg) scale(0.95)',
+                        opacity: 0,
+                        zIndex: 30,
+                        transition: 'all 420ms cubic-bezier(0.25, 1, 0.5, 1)',
+                      }}
+                    >
+                      <img
+                        src={t.portrait}
+                        alt={t.name}
+                        className="w-full h-full object-cover object-top"
+                      />
+                    </div>
+                  );
+                }
 
-              {/* 
-                CARD 2 (Middle Layer):
-                Visible rounded card tab peeking out behind Card 1
-              */}
-              <div
-                className="absolute inset-0 rounded-2xl sm:rounded-3xl bg-[#444E45] border border-white/15 shadow-xl transition-all duration-500 ease-out pointer-events-none"
-                style={{
-                  transform: `translateX(${isStackHovered ? 32 : 22}px) scaleY(0.95)`,
-                  transformOrigin: 'center left',
-                  zIndex: 10,
-                  opacity: 0.85,
-                }}
-              />
+                // Relative position in deck (0 = front, 1 = behind, 2 = 2nd behind, 3 = deepest)
+                const rel = (idx - currentIndex + testimonials.length) % testimonials.length;
 
-              {/* 
-                CARD 1 (Immediate Next Layer):
-                Visible rounded card tab with subtle photo peek right behind top card
-              */}
-              <div
-                className="absolute inset-0 rounded-2xl sm:rounded-3xl bg-[#525E54] border border-white/20 shadow-2xl transition-all duration-500 ease-out overflow-hidden pointer-events-none"
-                style={{
-                  transform: `translateX(${isStackHovered ? 16 : 11}px) scaleY(0.98)`,
-                  transformOrigin: 'center left',
-                  zIndex: 15,
-                  opacity: 0.95,
-                }}
-              >
-                <img
-                  src={testimonials[(currentIndex + 1) % testimonials.length].portrait}
-                  alt="Next up"
-                  className="w-full h-full object-cover object-top opacity-30 filter brightness-75"
-                />
-              </div>
+                // Card configurations
+                let shiftX = 0;
+                let scaleY = 1;
+                let scaleX = 1;
+                let opacity = 1;
+                let zIndex = 20;
+                let dimOpacity = 0;
 
-              {/* 
-                TOP ACTIVE CARD (Front Portrait):
-                Full opacity high-definition photograph with crisp rounded corners,
-                soft border, and rich drop shadow
-              */}
-              <div
-                className={`relative w-full h-full rounded-2xl sm:rounded-3xl overflow-hidden shadow-2xl border border-white/20 bg-neutral-900 transition-all duration-500 ease-out z-20 ${
-                  isStackHovered ? 'scale-[1.01]' : 'scale-100'
-                }`}
-              >
-                <img
-                  key={current.portrait}
-                  src={current.portrait}
-                  alt={current.name}
-                  className={`w-full h-full object-cover object-top transition-all duration-500 ${
-                    isTransitioning ? 'opacity-70 scale-102' : 'opacity-100 scale-100'
-                  }`}
-                />
-                {/* Subtle soft gradient overlay at bottom of photo */}
-                <div className="absolute inset-0 bg-gradient-to-t from-black/25 via-transparent to-transparent pointer-events-none" />
-              </div>
+                if (rel === 0) {
+                  // Active top card
+                  shiftX = 0;
+                  scaleY = 1;
+                  scaleX = 1;
+                  opacity = 1;
+                  zIndex = 20;
+                  dimOpacity = 0;
+                } else if (rel === 1) {
+                  // 1st layer behind
+                  shiftX = isStackHovered ? 20 : 13;
+                  scaleY = 0.96;
+                  scaleX = 0.98;
+                  opacity = 0.88;
+                  zIndex = 15;
+                  dimOpacity = 0.35;
+                } else if (rel === 2) {
+                  // 2nd layer behind
+                  shiftX = isStackHovered ? 38 : 25;
+                  scaleY = 0.92;
+                  scaleX = 0.96;
+                  opacity = 0.7;
+                  zIndex = 10;
+                  dimOpacity = 0.55;
+                } else {
+                  // 3rd layer behind (deepest)
+                  shiftX = isStackHovered ? 54 : 36;
+                  scaleY = 0.88;
+                  scaleX = 0.94;
+                  opacity = 0.5;
+                  zIndex = 5;
+                  dimOpacity = 0.72;
+                }
+
+                return (
+                  <div
+                    key={t.name}
+                    className="absolute inset-0 rounded-2xl sm:rounded-3xl overflow-hidden shadow-2xl border border-white/15 bg-[#2C342D]"
+                    style={{
+                      transform: `translateX(${shiftX}px) scaleY(${scaleY}) scaleX(${scaleX})`,
+                      transformOrigin: 'center left',
+                      opacity,
+                      zIndex,
+                      transition: 'all 450ms cubic-bezier(0.25, 1, 0.5, 1)',
+                    }}
+                  >
+                    <img
+                      src={t.portrait}
+                      alt={t.name}
+                      className="w-full h-full object-cover object-top"
+                    />
+                    {/* Shading overlay for physical card depth */}
+                    {dimOpacity > 0 && (
+                      <div
+                        className="absolute inset-0 bg-[#242A24] pointer-events-none transition-opacity duration-450"
+                        style={{ opacity: dimOpacity }}
+                      />
+                    )}
+                    {/* Subtle soft gradient at bottom of front card */}
+                    {rel === 0 && (
+                      <div className="absolute inset-0 bg-gradient-to-t from-black/25 via-transparent to-transparent pointer-events-none" />
+                    )}
+                  </div>
+                );
+              })}
             </div>
           </div>
         </div>
