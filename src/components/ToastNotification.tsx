@@ -33,7 +33,7 @@ export const ToastNotification: React.FC<ToastNotificationProps> = ({
   }, [toasts, onDismiss]);
 
   return (
-    <div className="fixed bottom-20 md:bottom-8 left-1/2 -translate-x-1/2 z-50 flex flex-col items-center gap-2.5 pointer-events-none max-w-lg w-[94vw] sm:w-auto">
+    <div className="fixed bottom-20 md:bottom-8 left-1/2 -translate-x-1/2 z-[9999] flex flex-col items-center gap-2.5 pointer-events-none max-w-lg w-[94vw] sm:w-auto">
       <AnimatePresence mode="popLayout">
         {toasts.map((toast) => {
           const hasImage = Boolean(toast.image);

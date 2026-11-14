@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { X, Mail, Lock, User, Eye, EyeOff, ArrowRight } from 'lucide-react';
+import { X, Mail, Lock, User, Eye, EyeOff, ArrowRight, Check } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 
 interface AuthModalProps {
@@ -175,14 +175,23 @@ export const AuthModal: React.FC<AuthModalProps> = ({
 
                 {/* Remember Me & Forgot Password */}
                 <div className="flex items-center justify-between text-xs pt-1">
-                  <label className="flex items-center gap-2 cursor-pointer select-none text-stone-600">
+                  <label className="group flex items-center gap-2.5 cursor-pointer select-none text-stone-600">
                     <input
                       type="checkbox"
                       checked={rememberMe}
                       onChange={(e) => setRememberMe(e.target.checked)}
-                      className="w-3.5 h-3.5 rounded border-stone-300 text-[#3D7B52] focus:ring-[#3D7B52]"
+                      className="sr-only"
                     />
-                    <span>Remember me</span>
+                    <div
+                      className={`w-4 h-4 rounded-md flex items-center justify-center transition-all duration-200 border ${
+                        rememberMe
+                          ? 'bg-[#3D7B52] border-[#3D7B52] text-white shadow-xs'
+                          : 'bg-white border-stone-300 group-hover:border-stone-400'
+                      }`}
+                    >
+                      {rememberMe && <Check className="w-3 h-3 text-white stroke-[3]" />}
+                    </div>
+                    <span className="font-medium">Remember me</span>
                   </label>
                   <button
                     type="button"
@@ -272,13 +281,22 @@ export const AuthModal: React.FC<AuthModalProps> = ({
                 </div>
 
                 {/* Newsletter Opt-In */}
-                <label className="flex items-start gap-2 cursor-pointer select-none text-[11px] text-stone-600 pt-1 leading-snug">
+                <label className="group flex items-start gap-2.5 cursor-pointer select-none text-[11px] text-stone-600 pt-1 leading-snug">
                   <input
                     type="checkbox"
                     checked={newsletterOptIn}
                     onChange={(e) => setNewsletterOptIn(e.target.checked)}
-                    className="w-3.5 h-3.5 mt-0.5 rounded border-stone-300 text-[#3D7B52] focus:ring-[#3D7B52]"
+                    className="sr-only"
                   />
+                  <div
+                    className={`w-4 h-4 mt-0.5 rounded-md flex items-center justify-center shrink-0 transition-all duration-200 border ${
+                      newsletterOptIn
+                        ? 'bg-[#3D7B52] border-[#3D7B52] text-white shadow-xs'
+                        : 'bg-white border-stone-300 group-hover:border-stone-400'
+                    }`}
+                  >
+                    {newsletterOptIn && <Check className="w-3 h-3 text-white stroke-[3]" />}
+                  </div>
                   <span>
                     Receive monthly Ayurvedic harvest guides, ritual tips & private batch releases.
                   </span>

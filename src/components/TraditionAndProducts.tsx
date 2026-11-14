@@ -1,5 +1,6 @@
-import React, { useState } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { ChevronLeft, ChevronRight, Star, Heart, Plus, Eye } from 'lucide-react';
+import { motion } from 'framer-motion';
 import { PRODUCTS_DATABASE, ProductItem } from '../data/products';
 
 export type { ProductItem };
@@ -20,6 +21,29 @@ export const TraditionAndProducts: React.FC<TraditionAndProductsProps> = ({
   const [activeFilter, setActiveFilter] = useState('All');
   const [currentPage, setCurrentPage] = useState(1);
   const CARDS_PER_PAGE = 4;
+
+  const tagsContainerRef = useRef<HTMLDivElement>(null);
+  const [canScrollLeft, setCanScrollLeft] = useState(false);
+  const [canScrollRight, setCanScrollRight] = useState(true);
+
+  const checkScrollPosition = () => {
+    if (!tagsContainerRef.current) return;
+    const { scrollLeft, scrollWidth, clientWidth } = tagsContainerRef.current;
+    setCanScrollLeft(scrollLeft > 6);
+    setCanScrollRight(scrollLeft < scrollWidth - clientWidth - 6);
+  };
+
+  useEffect(() => {
+    checkScrollPosition();
+    window.addEventListener('resize', checkScrollPosition);
+    return () => window.removeEventListener('resize', checkScrollPosition);
+  }, []);
+
+  const scrollTags = (direction: 'left' | 'right') => {
+    if (!tagsContainerRef.current) return;
+    const scrollAmount = direction === 'left' ? -200 : 200;
+    tagsContainerRef.current.scrollBy({ left: scrollAmount, behavior: 'smooth' });
+  };
 
   const categories = [
     { name: 'All', count: 116 },
@@ -85,7 +109,13 @@ export const TraditionAndProducts: React.FC<TraditionAndProductsProps> = ({
       {/* ========================================================= */}
       <section id="about" className="w-full pt-14 sm:pt-24 lg:pt-32">
         {/* Header Row */}
-        <div className="flex flex-col md:flex-row md:items-start justify-between gap-6 mb-8 sm:mb-10">
+        <motion.div
+          initial={{ opacity: 0, y: 25 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: '-60px' }}
+          transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
+          className="flex flex-col md:flex-row md:items-start justify-between gap-6 mb-8 sm:mb-10"
+        >
           {/* Left Title: Rooted in ancient botany, verified by modern science */}
           <div>
             <h2 className="font-sans font-bold text-3xl sm:text-4xl md:text-[2.65rem] text-[#161B16] tracking-tight leading-[1.15]">
@@ -108,10 +138,16 @@ export const TraditionAndProducts: React.FC<TraditionAndProductsProps> = ({
               Our Story
             </a>
           </div>
-        </div>
+        </motion.div>
 
         {/* 3 Bento Cards Row */}
-        <div className="grid grid-cols-1 md:grid-cols-12 gap-5 items-stretch">
+        <motion.div
+          initial={{ opacity: 0, y: 32 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: '-60px' }}
+          transition={{ duration: 0.8, delay: 0.1, ease: [0.22, 1, 0.36, 1] }}
+          className="grid grid-cols-1 md:grid-cols-12 gap-5 items-stretch"
+        >
           {/* 
             CARD 1 (Left): Full-Bleed Card Background Photo + Floating "Trusted by nature" 68% Badge
           */}
@@ -297,7 +333,7 @@ export const TraditionAndProducts: React.FC<TraditionAndProductsProps> = ({
               </span>
             </div>
           </div>
-        </div>
+        </motion.div>
       </section>
 
       {/* ========================================================= */}
@@ -305,38 +341,101 @@ export const TraditionAndProducts: React.FC<TraditionAndProductsProps> = ({
       {/* Generous breathing space & frosted glassmorphism cards    */}
       {/* ========================================================= */}
       <section id="shop" className="w-full text-center pt-12 sm:pt-16 lg:pt-20">
-        <h2 className="font-sans font-bold text-3xl sm:text-4xl md:text-5xl text-[#161B16] tracking-tight leading-tight mb-3">
-          Targeted blends for how you{' '}
-          <span className="font-handwriting text-[1.16em] font-normal text-[#161B16]">
-            want to feel
-          </span>
-        </h2>
-        <p className="text-xs sm:text-sm text-gray-600">
-          Each single-origin formulation is calibrated to restore equilibrium and support your daily circadian rhythm.
-        </p>
+        <motion.div
+          initial={{ opacity: 0, y: 25 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: '-60px' }}
+          transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
+        >
+          <h2 className="font-sans font-bold text-3xl sm:text-4xl md:text-5xl text-[#161B16] tracking-tight leading-tight mb-3">
+            Targeted blends for how you{' '}
+            <span className="font-handwriting text-[1.16em] font-normal text-[#161B16]">
+              want to feel
+            </span>
+          </h2>
+          <p className="text-xs sm:text-sm text-gray-600">
+            Each single-origin formulation is calibrated to restore equilibrium and support your daily circadian rhythm.
+          </p>
 
-        {/* Filter Pill Row */}
-        <div className="flex items-center justify-center gap-1.5 sm:gap-2 overflow-x-auto pt-6 pb-2 no-scrollbar">
-          {categories.map((cat) => {
-            const isActive = activeFilter === cat.name;
-            return (
-              <button
-                key={cat.name}
-                onClick={() => handleCategorySelect(cat.name)}
-                className={`px-4 py-2 rounded-full text-xs font-semibold whitespace-nowrap transition-all ${
-                  isActive
-                    ? 'bg-[#1B211C] text-white shadow-xs'
-                    : 'bg-[#F0ECE5] text-gray-700 hover:bg-gray-200 border border-black/5'
+          {/* Filter Pill Row Container: Inline Chevrons + Scrollable Tags on the Same Line */}
+          <div className="max-w-4xl mx-auto pt-6 pb-2 px-2 sm:px-4 flex items-center justify-center gap-1.5 sm:gap-2">
+            {/* Left Inline Scroll Button */}
+            <button
+              onClick={() => scrollTags('left')}
+              disabled={!canScrollLeft}
+              className={`w-8 h-8 rounded-full bg-white shadow-xs border border-stone-200/90 flex items-center justify-center text-stone-700 hover:text-[#3D7B52] hover:border-[#3D7B52]/40 transition-all shrink-0 cursor-pointer active:scale-90 ${
+                canScrollLeft ? 'opacity-100 hover:bg-stone-50' : 'opacity-20 cursor-not-allowed pointer-events-none'
+              }`}
+              aria-label="Scroll categories left"
+            >
+              <ChevronLeft className="w-4 h-4" />
+            </button>
+
+            {/* Scrollable Filter Row Container */}
+            <div className="relative flex-1 overflow-hidden min-w-0">
+              {/* Left Edge Gradient Fade */}
+              <div
+                className={`absolute inset-y-0 left-0 w-8 bg-gradient-to-r from-[#FAF7F2] to-transparent z-10 pointer-events-none transition-opacity duration-300 ${
+                  canScrollLeft ? 'opacity-100' : 'opacity-0'
                 }`}
+              />
+
+              {/* Tags Row */}
+              <div
+                ref={tagsContainerRef}
+                onScroll={checkScrollPosition}
+                className="flex items-center gap-1.5 sm:gap-2 overflow-x-auto no-scrollbar scroll-smooth py-1 px-1 sm:justify-center"
               >
-                {cat.name}
-                <span className={`ml-1 text-[10px] ${isActive ? 'text-gray-300' : 'text-gray-400'}`}>
-                  {cat.count}
-                </span>
-              </button>
-            );
-          })}
-        </div>
+                {categories.map((cat) => {
+                  const isActive = activeFilter === cat.name;
+                  return (
+                    <button
+                      key={cat.name}
+                      onClick={() => handleCategorySelect(cat.name)}
+                      className={`px-4 py-2 rounded-full text-xs font-semibold whitespace-nowrap transition-all cursor-pointer shrink-0 ${
+                        isActive
+                          ? 'bg-[#1B211C] text-white shadow-xs'
+                          : 'bg-[#F0ECE5] text-gray-700 hover:bg-gray-200 border border-black/5'
+                      }`}
+                    >
+                      {cat.name}
+                      <span className={`ml-1 text-[10px] ${isActive ? 'text-gray-300' : 'text-gray-400'}`}>
+                        {cat.count}
+                      </span>
+                    </button>
+                  );
+                })}
+              </div>
+
+              {/* Right Edge Gradient Fade */}
+              <div
+                className={`absolute inset-y-0 right-0 w-8 bg-gradient-to-l from-[#FAF7F2] to-transparent z-10 pointer-events-none transition-opacity duration-300 ${
+                  canScrollRight ? 'opacity-100' : 'opacity-0'
+                }`}
+              />
+            </div>
+
+            {/* Right Inline Scroll Button */}
+            <button
+              onClick={() => scrollTags('right')}
+              disabled={!canScrollRight}
+              className={`w-8 h-8 rounded-full bg-white shadow-xs border border-stone-200/90 flex items-center justify-center text-stone-700 hover:text-[#3D7B52] hover:border-[#3D7B52]/40 transition-all shrink-0 cursor-pointer active:scale-90 ${
+                canScrollRight ? 'opacity-100 hover:bg-stone-50' : 'opacity-20 cursor-not-allowed pointer-events-none'
+              }`}
+              aria-label="Scroll categories right"
+            >
+              <ChevronRight className="w-4 h-4" />
+            </button>
+          </div>
+        </motion.div>
+
+        {/* Product Cards Grid & Pagination with Smooth Entrance */}
+        <motion.div
+          initial={{ opacity: 0, y: 32 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: '-60px' }}
+          transition={{ duration: 0.8, delay: 0.08, ease: [0.22, 1, 0.36, 1] }}
+        >
 
         {/* Product Cards Grid: Generous breathing space below category filter tags */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 text-left mt-8 sm:mt-12 lg:mt-16">
@@ -526,6 +625,7 @@ export const TraditionAndProducts: React.FC<TraditionAndProductsProps> = ({
             </span>
           </div>
         )}
+        </motion.div>
       </section>
     </div>
   );

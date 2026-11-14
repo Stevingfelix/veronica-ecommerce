@@ -1,9 +1,16 @@
 import React from 'react';
 import { Instagram, Linkedin, Music, Youtube } from 'lucide-react';
+import { motion } from 'framer-motion';
 
 export const Footer: React.FC = () => {
   return (
-    <footer className="w-full overflow-hidden">
+    <motion.footer
+      initial={{ opacity: 0, y: 35 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, margin: '-50px' }}
+      transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
+      className="w-full overflow-hidden"
+    >
       <div className="bg-[#141A15] text-white rounded-t-[2.5rem] rounded-b-none sm:rounded-[2.5rem] lg:rounded-[3rem] p-6 sm:p-10 lg:p-14 shadow-xl w-full">
         {/* Top 4 Columns */}
         <div className="grid grid-cols-2 md:grid-cols-12 gap-8 lg:gap-12 pb-14 border-b border-white/10">
@@ -175,6 +182,6 @@ export const Footer: React.FC = () => {
           <p>Rooted in Ayurveda. Tested by modern science.</p>
         </div>
       </div>
-    </footer>
+    </motion.footer>
   );
 };

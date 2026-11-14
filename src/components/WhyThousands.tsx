@@ -1,5 +1,6 @@
 import React from 'react';
 import { Leaf, FlaskConical, Sprout, Calendar } from 'lucide-react';
+import { motion } from 'framer-motion';
 
 export const WhyThousands: React.FC = () => {
   return (
@@ -8,7 +9,13 @@ export const WhyThousands: React.FC = () => {
         MASTER CONTAINER:
         Full-width edge-to-edge on mobile (rounded-none), luxury framed card on tablet & desktop
       */}
-      <div className="w-full bg-[#242A24] text-white rounded-none sm:rounded-[2.5rem] lg:rounded-[3rem] px-5 sm:px-10 lg:px-12 py-9 sm:py-10 lg:py-12 shadow-2xl border-y sm:border border-white/5 overflow-hidden">
+      <motion.div
+        initial={{ opacity: 0, y: 36 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true, margin: '-70px' }}
+        transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
+        className="w-full bg-[#242A24] text-white rounded-none sm:rounded-[2.5rem] lg:rounded-[3rem] px-5 sm:px-10 lg:px-12 py-9 sm:py-10 lg:py-12 shadow-2xl border-y sm:border border-white/5 overflow-hidden"
+      >
         {/* Top Header */}
         <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-8 sm:mb-10">
           <div>
@@ -243,7 +250,7 @@ export const WhyThousands: React.FC = () => {
             </div>
           </div>
         </div>
-      </div>
+      </motion.div>
     </section>
   );
 };

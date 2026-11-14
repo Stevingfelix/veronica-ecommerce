@@ -258,9 +258,6 @@ export const App: React.FC = () => {
 
   return (
     <div className="min-h-screen bg-[#F7F5F0] text-[#1D221E] font-sans selection:bg-[#3D7B52] selection:text-white flex flex-col antialiased">
-      {/* Toast Notification Container */}
-      <ToastNotification toasts={toasts} onDismiss={dismissToast} />
-
       {/* Hero: Edge-to-edge on mobile, framed luxury card on tablet & desktop */}
       <div className="w-full sm:max-w-[97vw] 2xl:max-w-[1860px] mx-auto sm:px-3 md:px-4 lg:px-5 sm:pt-6 lg:pt-8">
         <Hero
@@ -358,6 +355,9 @@ export const App: React.FC = () => {
         isWishlisted={selectedProduct ? wishlistIds.includes(selectedProduct.id) : false}
         onToggleWishlist={handleToggleWishlist}
       />
+
+      {/* 8. Toast Notifications (Mounted on top of all modals & drawers) */}
+      <ToastNotification toasts={toasts} onDismiss={dismissToast} />
     </div>
   );
 };

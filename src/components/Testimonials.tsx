@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Star, ChevronLeft, ChevronRight } from 'lucide-react';
+import { motion } from 'framer-motion';
 
 interface Testimonial {
   quote: string;
@@ -118,7 +119,13 @@ export const Testimonials: React.FC = () => {
   }, [currentIndex, isAnimating]);
 
   return (
-    <section className="w-full pt-16 sm:pt-24 lg:pt-32">
+    <motion.section
+      initial={{ opacity: 0, y: 36 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, margin: '-70px' }}
+      transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
+      className="w-full pt-16 sm:pt-24 lg:pt-32"
+    >
       {/* Dynamic Keyframe style tag for silky smooth quote animation */}
       <style>{`
         @keyframes testimonialEnter {
@@ -404,6 +411,6 @@ export const Testimonials: React.FC = () => {
           </div>
         </div>
       </div>
-    </section>
+    </motion.section>
   );
 };
