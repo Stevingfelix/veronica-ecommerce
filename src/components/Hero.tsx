@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Search, Heart, ShoppingBag, Star, Menu, X } from 'lucide-react';
+import { motion } from 'framer-motion';
 
 interface HeroProps {
   cartCount: number;
@@ -34,12 +35,15 @@ export const Hero: React.FC<HeroProps> = ({
     <div className="w-full">
       {/* 
         MASTER HERO CARD
-        HD Yoga Photo background as requested by user
+        HD Yoga Photo background with Framer Motion cinematic reveal
       */}
       <div className="relative rounded-none sm:rounded-[2.5rem] lg:rounded-[3rem] overflow-hidden min-h-[660px] sm:min-h-[720px] lg:min-h-[760px] flex flex-col justify-between pt-6 sm:pt-9 lg:pt-11 px-5 sm:px-10 lg:px-12 pb-9 sm:pb-14 lg:pb-16 shadow-2xl w-full">
-        {/* Background Image: HD Yoga photo at sunset/sunrise */}
-        <div className="absolute inset-0 z-0">
-          <img
+        {/* Background Image: HD Yoga photo at sunset/sunrise with subtle slow cinematic reveal */}
+        <div className="absolute inset-0 z-0 overflow-hidden">
+          <motion.img
+            initial={{ scale: 1.08 }}
+            animate={{ scale: 1 }}
+            transition={{ duration: 1.6, ease: [0.16, 1, 0.3, 1] }}
             src="/images/hero-yoga-hd.jpg"
             alt="HD Yoga wellness silhouette at sunset"
             className="w-full h-full object-cover object-[center_35%]"
@@ -52,7 +56,12 @@ export const Hero: React.FC<HeroProps> = ({
         {/* 
           INTEGRATED HEADER AT TOP OF HERO
         */}
-        <header className="relative z-20 flex items-center justify-between gap-4">
+        <motion.header
+          initial={{ opacity: 0, y: -20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1], delay: 0.1 }}
+          className="relative z-20 flex items-center justify-between gap-4"
+        >
           {/* Brand Logo: Green Leaf Emblem + VERONICA */}
           <a href="#home" className="flex items-center gap-2.5 group">
             <div className="w-8 h-8 rounded-full bg-[#3D7B52] flex items-center justify-center text-white shadow-md">
@@ -153,7 +162,7 @@ export const Hero: React.FC<HeroProps> = ({
               {mobileMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
             </button>
           </div>
-        </header>
+        </motion.header>
 
         {/* Mobile Dropdown Menu */}
         {mobileMenuOpen && (
@@ -194,7 +203,12 @@ export const Hero: React.FC<HeroProps> = ({
           {/* Left Column: Headlines & Actions - Centered on Mobile, Left-aligned on Desktop */}
           <div className="lg:col-span-8 max-w-xl flex flex-col items-center sm:items-start text-center sm:text-left mx-auto lg:mx-0">
             {/* Rating Badge: 3 avatars + 5 stars + 4.9 · 12k+ daily rituals */}
-            <div className="inline-flex items-center gap-2.5 bg-black/40 backdrop-blur-md border border-white/20 px-3.5 py-1.5 rounded-full mb-5 mx-auto sm:mx-0">
+            <motion.div
+              initial={{ opacity: 0, y: 16 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.25, ease: [0.22, 1, 0.36, 1] }}
+              className="inline-flex items-center gap-2.5 bg-black/40 backdrop-blur-md border border-white/20 px-3.5 py-1.5 rounded-full mb-5 mx-auto sm:mx-0"
+            >
               <div className="flex -space-x-1.5">
                 <img
                   src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=100&h=100&q=80"
@@ -222,65 +236,100 @@ export const Hero: React.FC<HeroProps> = ({
                   4.9 · 12k+ daily rituals
                 </span>
               </div>
-            </div>
+            </motion.div>
 
             {/* Main Headline with Handwriting Cursive Font for "Inner Rhythm" */}
-            <h1 className="text-white font-sans font-extrabold text-4xl sm:text-5xl md:text-6xl lg:text-[4.1rem] tracking-tight leading-[1.1] mb-4 drop-shadow-sm text-center sm:text-left">
+            <motion.h1
+              initial={{ opacity: 0, y: 24 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, delay: 0.38, ease: [0.22, 1, 0.36, 1] }}
+              className="text-white font-sans font-extrabold text-4xl sm:text-5xl md:text-6xl lg:text-[4.1rem] tracking-tight leading-[1.1] mb-4 drop-shadow-sm text-center sm:text-left"
+            >
               Return to Your <br className="hidden sm:inline" />
               <span className="sm:hidden"> </span>Natural <span className="font-handwriting text-[1.18em] font-normal text-white">Inner Rhythm</span>
-            </h1>
+            </motion.h1>
 
             {/* Subheading */}
-            <p className="text-white/90 text-xs sm:text-sm md:text-base leading-relaxed max-w-lg mb-7 drop-shadow-xs text-center sm:text-left mx-auto sm:mx-0">
+            <motion.p
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.75, delay: 0.52, ease: [0.22, 1, 0.36, 1] }}
+              className="text-white/90 text-xs sm:text-sm md:text-base leading-relaxed max-w-lg mb-7 drop-shadow-xs text-center sm:text-left mx-auto sm:mx-0"
+            >
               Single-origin adaptogens and whole Ayurvedic botanicals formulated for everyday biological balance. One uplifting morning blend, one deeply restorative evening.
-            </p>
+            </motion.p>
 
             {/* Call To Action Buttons - Centered on Mobile */}
-            <div className="flex flex-col sm:flex-row items-center justify-center sm:justify-start gap-3 w-full sm:w-auto">
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.7, delay: 0.65, ease: [0.22, 1, 0.36, 1] }}
+              className="flex flex-col sm:flex-row items-center justify-center sm:justify-start gap-3 w-full sm:w-auto"
+            >
               {/* Green Pill Button */}
-              <a
+              <motion.a
+                whileHover={{ scale: 1.03, y: -2 }}
+                whileTap={{ scale: 0.97 }}
                 href="#shop"
-                className="bg-[#488B5B] hover:bg-[#3B734A] text-white text-xs sm:text-sm font-bold uppercase tracking-wider px-6 py-3 rounded-full shadow-lg transition-all transform hover:-translate-y-0.5 text-center"
+                className="bg-[#488B5B] hover:bg-[#3B734A] text-white text-xs sm:text-sm font-bold uppercase tracking-wider px-6 py-3 rounded-full shadow-lg transition-all text-center"
               >
                 Shop the ritual
-              </a>
+              </motion.a>
 
               {/* White Frosted Glass Pill Button */}
-              <button
+              <motion.button
+                whileHover={{ scale: 1.03, y: -2 }}
+                whileTap={{ scale: 0.97 }}
                 onClick={onOpenDoshaQuiz}
                 className="bg-white/20 hover:bg-white/30 backdrop-blur-md text-white text-xs sm:text-sm font-semibold px-6 py-3 rounded-full border border-white/30 transition-all text-center cursor-pointer active:scale-95"
               >
                 Take the dosha quiz
-              </button>
-            </div>
+              </motion.button>
+            </motion.div>
           </div>
 
           {/* Right Column: Floating 92% Proof Card with Green Progress Bar - Full Width to the right on Mobile */}
           <div className="lg:col-span-4 flex justify-center sm:justify-start lg:justify-end w-full">
-            <div className="bg-white rounded-[1.5rem] sm:rounded-[1.75rem] shadow-2xl overflow-hidden w-full sm:w-[225px] transform sm:hover:scale-105 transition-all duration-300">
-              {/* Full Card Width Image */}
-              <div className="w-full h-40 sm:h-36 overflow-hidden bg-[#FAF7F2]">
-                <img
-                  src="/images/card-92-exact-hd.jpg?v=2"
-                  alt="Herbal elixir bottle with lavender and botanicals"
-                  className="w-full h-full object-cover object-center"
-                />
-              </div>
+            <motion.div
+              initial={{ opacity: 0, scale: 0.92, y: 30 }}
+              animate={{ opacity: 1, scale: 1, y: 0 }}
+              transition={{ duration: 0.85, delay: 0.75, ease: [0.16, 1, 0.3, 1] }}
+              className="w-full sm:w-[225px]"
+            >
+              <motion.div
+                animate={{ y: [0, -6, 0] }}
+                transition={{ duration: 5.5, repeat: Infinity, ease: 'easeInOut' }}
+                className="bg-white rounded-[1.5rem] sm:rounded-[1.75rem] shadow-2xl overflow-hidden w-full transform sm:hover:scale-105 transition-transform duration-300"
+              >
+                {/* Full Card Width Image */}
+                <div className="w-full h-40 sm:h-36 overflow-hidden bg-[#FAF7F2]">
+                  <img
+                    src="/images/card-92-exact-hd.jpg?v=2"
+                    alt="Herbal elixir bottle with lavender and botanicals"
+                    className="w-full h-full object-cover object-center"
+                  />
+                </div>
 
-              {/* Text & Progress Section */}
-              <div className="p-4 sm:p-5 pt-3.5 sm:pt-4 bg-white">
-                <div className="font-display font-extrabold text-2xl sm:text-3xl text-[#1C221D] leading-none mb-1">
-                  92%
+                {/* Text & Progress Section */}
+                <div className="p-4 sm:p-5 pt-3.5 sm:pt-4 bg-white">
+                  <div className="font-display font-extrabold text-2xl sm:text-3xl text-[#1C221D] leading-none mb-1">
+                    92%
+                  </div>
+                  <p className="text-[11px] sm:text-xs text-gray-500 font-medium leading-snug mb-3">
+                    feel calmer in 4 weeks
+                  </p>
+                  {/* Animated Green Progress Indicator Line */}
+                  <div className="w-full h-1.5 sm:h-1 bg-gray-100 rounded-full overflow-hidden">
+                    <motion.div
+                      initial={{ width: 0 }}
+                      animate={{ width: '92%' }}
+                      transition={{ duration: 1.2, delay: 1.1, ease: [0.16, 1, 0.3, 1] }}
+                      className="h-full bg-[#3D7B52] rounded-full"
+                    />
+                  </div>
                 </div>
-                <p className="text-[11px] sm:text-xs text-gray-500 font-medium leading-snug mb-3">
-                  feel calmer in 4 weeks
-                </p>
-                {/* Green Progress Indicator Line */}
-                <div className="w-full h-1.5 sm:h-1 bg-gray-100 rounded-full overflow-hidden">
-                  <div className="h-full bg-[#3D7B52] rounded-full w-[92%]" />
-                </div>
-              </div>
-            </div>
+              </motion.div>
+            </motion.div>
           </div>
         </div>
       </div>
